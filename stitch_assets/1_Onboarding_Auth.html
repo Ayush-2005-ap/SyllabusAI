@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI | Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#4f94dd",
+                        "primary": "#a0caff",
+                        "surface-tint": "#a0caff",
+                        "outline": "#8b919c",
+                        "inverse-on-surface": "#2b3040",
+                        "on-error": "#690005",
+                        "inverse-surface": "#dee1f7",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-surface-variant": "#c1c7d2",
+                        "on-primary-fixed": "#001c37",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "on-secondary-fixed": "#011d36",
+                        "on-surface": "#dee1f7",
+                        "surface-bright": "#343949",
+                        "secondary": "#b1c8e9",
+                        "primary-fixed": "#d2e4ff",
+                        "background": "#0e1322",
+                        "surface": "#0e1322",
+                        "on-tertiary": "#452b00",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary": "#ffb955",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-secondary-container": "#9fb7d7",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002b4e",
+                        "on-secondary-fixed-variant": "#314864",
+                        "outline-variant": "#414751",
+                        "surface-container-low": "#161b2b",
+                        "secondary-fixed": "#d2e4ff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#a0caff",
+                        "on-background": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "surface-container-high": "#25293a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-dim": "#0e1322",
+                        "on-secondary": "#1a324c",
+                        "inverse-primary": "#0061a5",
+                        "on-primary": "#003259",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(160, 202, 255, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen">
+<!-- Splash Screen (Simulated as First Section) -->
+<section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden p-6" id="splash">
+<div class="absolute inset-0 z-0">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary-container/10 rounded-full blur-[100px]"></div>
+</div>
+<div class="z-10 text-center space-y-4">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-6xl text-primary mb-4" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<h1 class="text-5xl md:text-7xl font-headline font-black tracking-tighter text-primary text-glow">SyllabusAI</h1>
+</div>
+<p class="text-on-background/70 text-lg md:text-xl font-medium tracking-wide">Your unfair academic advantage</p>
+</div>
+</section>
+<!-- Onboarding Carousel (Bento-style items) -->
+<section class="min-h-screen bg-surface-container-lowest p-6 md:p-12 flex flex-col items-center justify-center" id="onboarding">
+<div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Slide 1: Upload Syllabus -->
+<div class="glass-card p-8 rounded-lg flex flex-col items-start justify-between min-h-[400px] border-l border-t border-white/10">
+<div>
+<span class="material-symbols-outlined text-4xl text-primary mb-6">upload_file</span>
+<h2 class="text-2xl font-headline font-bold text-on-background mb-4">Upload syllabus</h2>
+<p class="text-on-background/60 leading-relaxed">Turn static PDFs into dynamic study paths. One upload, total clarity.</p>
+</div>
+<img class="w-full h-48 object-cover rounded-md mt-6 grayscale hover:grayscale-0 transition-all duration-700" data-alt="Modern minimalist aesthetic of a digital document glowing on a dark background with blue ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUEhHHPtUeq2Wdiyj4dzZXtefRonjCd-qEcWnICMb3E50Vdo4e20DhRY_t6gt8z2ZXBb68fcnYsdcrSelcmsQ2_VoVXdM5MBvrscHLrxT_hmJ_yhGBGyf1qoa3TR0O_yddlEpA3HfYjezqyXY1y2C0_Pq8Qs74YbZpyoiRIwkCVtedV0egC3Y74iAinFF1sITrm7k3YT1jkY4asRHkrcwOjk6bBncfMX24n0gX9UKphNy_Q4zUp_DutCBukzg9IN9w3hnSw4sx3-B7"/>
+</div>
+<!-- Slide 2: AI Predicts -->
+<div class="bg-surface-container-high p-8 rounded-lg flex flex-col items-start justify-between min-h-[400px]">
+<div>
+<span class="material-symbols-outlined text-4xl text-tertiary mb-6" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h2 class="text-2xl font-headline font-bold text-on-background mb-4">AI predicts exams</h2>
+<p class="text-on-background/60 leading-relaxed">Our models analyze historical patterns to pinpoint exactly what you need to master.</p>
+</div>
+<div class="w-full h-48 bg-primary-container/20 rounded-md mt-6 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-24 h-24 bg-primary/20 rounded-full animate-pulse blur-2xl"></div>
+</div>
+<span class="material-symbols-outlined text-6xl text-primary">data_thresholding</span>
+</div>
+</div>
+<!-- Slide 3: Study Smarter -->
+<div class="glass-card p-8 rounded-lg flex flex-col items-start justify-between min-h-[400px] border-r border-b border-white/10">
+<div>
+<span class="material-symbols-outlined text-4xl text-primary mb-6">calendar_today</span>
+<h2 class="text-2xl font-headline font-bold text-on-background mb-4">Study smarter</h2>
+<p class="text-on-background/60 leading-relaxed">Automated schedules that adapt to your pace, social life, and peak energy hours.</p>
+</div>
+<img class="w-full h-48 object-cover rounded-md mt-6 contrast-125 brightness-75" data-alt="Conceptual top-down view of a digital calendar on a sleek glass surface with soft neon blue highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq-P6LArNwPF4DBWR_pz8oyhkUU-VrulkyT7H9IGda5PWP02_U-pxaAD3U4_68bSpQdrf9BcVDu76WWX0E8Ssf1MOr4GrKUk9hAeN7FfXOHZNvQT_7YUuvbqpxmBKYTvZpELycfM8HCINm3Pfd5PvMnK5U19Wsj3mQTwADpjzsAGHB-NcVNI9e8MAQqecOiDVPqj3d0uR6ERuVLdJaBhYFigChvAF7K8Gt1N0pmKMPDymQj1Yjsjkdc-_ch9Rz27XOjVhEdnQ4B4E5"/>
+</div>
+</div>
+<button class="mt-12 px-10 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-bold rounded-full hover:scale-105 transition-transform">
+            Get Started
+        </button>
+</section>
+<!-- Auth: Login & Signup -->
+<section class="min-h-screen p-6 flex items-center justify-center relative" id="auth">
+<!-- Floating Ambient Background -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+<div class="absolute top-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-20 left-20 w-64 h-64 bg-tertiary/5 rounded-full blur-[120px]"></div>
+</div>
+<div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<!-- Signup Form (Left Focus) -->
+<div class="glass-card p-10 rounded-lg shadow-2xl space-y-8">
+<div class="space-y-2">
+<h3 class="text-3xl font-headline font-extrabold tracking-tight">Create your account</h3>
+<p class="text-on-background/50 text-sm">Join the next generation of top performers.</p>
+</div>
+<form class="space-y-6">
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-widest font-semibold text-primary px-1">Name</label>
+<input class="w-full bg-surface-container-highest/50 border-none border-b border-outline-variant focus:border-primary focus:ring-0 rounded-md h-12 px-4 transition-all" placeholder="Julian Dean" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-widest font-semibold text-primary px-1">Email</label>
+<input class="w-full bg-surface-container-highest/50 border-none border-b border-outline-variant focus:border-primary focus:ring-0 rounded-md h-12 px-4 transition-all" placeholder="dean@university.edu" type="email"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs uppercase tracking-widest font-semibold text-primary px-1">Password</label>
+<input class="w-full bg-surface-container-highest/50 border-none border-b border-outline-variant focus:border-primary focus:ring-0 rounded-md h-12 px-4 transition-all" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-full hover:bg-primary-container transition-colors shadow-lg shadow-primary/10">
+                        Create Account
+                    </button>
+</form>
+</div>
+<!-- Login / Branding (Right Focus) -->
+<div class="space-y-12 md:pl-10">
+<div class="space-y-6">
+<h3 class="text-3xl font-headline font-extrabold tracking-tight">Welcome back</h3>
+<div class="space-y-4">
+<div class="relative">
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 h-14 px-0 transition-all placeholder:text-on-background/30" placeholder="Email Address" type="email"/>
+</div>
+<div class="relative">
+<input class="w-full bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 h-14 px-0 transition-all placeholder:text-on-background/30" placeholder="Password" type="password"/>
+</div>
+<div class="flex justify-between items-center pt-2">
+<a class="text-xs font-semibold text-primary hover:text-primary-container uppercase tracking-tight transition-colors" href="#">Forgot Password?</a>
+<button class="px-8 py-3 bg-surface-container-high border border-outline-variant/30 text-on-surface font-bold rounded-full hover:bg-white/5 transition-colors">
+                                Sign In
+                            </button>
+</div>
+</div>
+</div>
+<!-- Footer-style Branding -->
+<div class="pt-8 border-t border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-background">Secure Academic Workspace</p>
+<p class="text-xs text-on-background/50">Encrypted syllabus parsing &amp; private AI.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Mandatory Bottom Spacer for Mobile Shell Clearance if needed -->
+<div class="h-24 md:hidden"></div>
+</body></html>

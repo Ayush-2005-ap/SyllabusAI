@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI - Profile &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#4f94dd",
+                        "primary": "#a0caff",
+                        "surface-tint": "#a0caff",
+                        "outline": "#8b919c",
+                        "inverse-on-surface": "#2b3040",
+                        "on-error": "#690005",
+                        "inverse-surface": "#dee1f7",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-surface-variant": "#c1c7d2",
+                        "on-primary-fixed": "#001c37",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "on-secondary-fixed": "#011d36",
+                        "on-surface": "#dee1f7",
+                        "surface-bright": "#343949",
+                        "secondary": "#b1c8e9",
+                        "primary-fixed": "#d2e4ff",
+                        "background": "#0e1322",
+                        "surface": "#0e1322",
+                        "on-tertiary": "#452b00",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary": "#ffb955",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-secondary-container": "#9fb7d7",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002b4e",
+                        "on-secondary-fixed-variant": "#314864",
+                        "outline-variant": "#414751",
+                        "surface-container-low": "#161b2b",
+                        "secondary-fixed": "#d2e4ff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#a0caff",
+                        "on-background": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "surface-container-high": "#25293a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-dim": "#0e1322",
+                        "on-secondary": "#1a324c",
+                        "inverse-primary": "#0061a5",
+                        "on-primary": "#003259",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .ghost-border-focus:focus-within { border-bottom-color: #a0caff; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Close up portrait of a young male university student with a friendly expression, soft cinematic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKNCE6dbIqSVWxedHejDVXjwimrUcLDACjFknZ6Z0tPiCFlMam43LrrhFpiD6Z0ZgX5OvVErilkpmyQBq7FgLO1-b7eW_UI3NafmBcCYQzasyufLKgK6Mv3_7jyWZB-NdtgcEWT6d7KXrKEzIqxnmbbvv5ary-lwj5R4Avk5ZiuACLYRN-JV6Ad3L9m9KQmV7LgFc4NBVNDR_nczJOzDF2soU5V1Y1dnpNouQmn6rIewaB6pCHZepaaXucVDplZ7tenRanR34SQ4SN"/>
+<span class="text-xl font-black text-[#a0caff] tracking-tighter">SyllabusAI</span>
+</div>
+<button class="material-symbols-outlined text-[#a0caff] hover:bg-white/5 transition-colors p-2 rounded-full scale-95 duration-200" data-icon="search">search</button>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-12">
+<!-- User Identity Section -->
+<section class="flex flex-col md:flex-row items-center md:items-end gap-8">
+<div class="relative">
+<div class="w-32 h-32 rounded-xl overflow-hidden ring-4 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a student against a dark abstract background, high-end editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdb1RTsTzkDa4TQfJ9J_1xTb81IVbt3mWZ__ooo7YGJPd4F9tW2p4A388xuUAjMVP_ILkq6LAdW1vwx-COhSZGC9AY1HOPvHhMQpN19FQxIjwjtN2ZiqXd6L-iw9nAXEEL1-v1z8bRt5weYiQURs6GYA5SEa6bG9eN3OiSYMp5J5O7HZbq-irSrfdxFvOp5gAypf38Y8I_LQ_NGqv9qlIhvHQAj1Q8wQcmOLFAdWoVbJDXcMRpkAmMN14vyhTl1iGw8frGtiTte4qb"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-on-primary-container p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</div>
+</div>
+<div class="text-center md:text-left space-y-1">
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface">Alex Harrington</h1>
+<p class="text-on-surface-variant font-medium flex items-center justify-center md:justify-start gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="school">school</span>
+                    Stanford University • Computer Science
+                </p>
+<div class="inline-flex items-center px-3 py-1 bg-surface-container-high rounded-full mt-2">
+<span class="text-[10px] uppercase tracking-widest font-semibold text-primary">Fall 2024 • Semester 5</span>
+</div>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-6 rounded-lg flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="timer">timer</span>
+<div>
+<p class="text-3xl font-black text-on-surface">142</p>
+<p class="text-[10px] uppercase tracking-widest font-semibold text-on-surface-variant">Total Hours</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="auto_stories">auto_stories</span>
+<div>
+<p class="text-3xl font-black text-on-surface">6</p>
+<p class="text-[10px] uppercase tracking-widest font-semibold text-on-surface-variant">Subjects</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="quiz">quiz</span>
+<div>
+<p class="text-3xl font-black text-on-surface">24</p>
+<p class="text-[10px] uppercase tracking-widest font-semibold text-on-surface-variant">Quizzes</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg flex flex-col justify-between aspect-square md:aspect-auto relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<div>
+<p class="text-3xl font-black text-on-surface">12</p>
+<p class="text-[10px] uppercase tracking-widest font-semibold text-on-surface-variant">Day Streak</p>
+</div>
+</div>
+</section>
+<!-- Main Settings Layout -->
+<section class="grid md:grid-cols-3 gap-12">
+<!-- Left Column: Study Preferences -->
+<div class="md:col-span-2 space-y-10">
+<div class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-primary flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+                        Academic Engine
+                    </h2>
+<!-- Study Hours Slider -->
+<div class="bg-surface-container-low p-8 rounded-lg space-y-6">
+<div class="flex justify-between items-center">
+<label class="font-semibold text-on-surface">Study Target</label>
+<span class="text-primary font-black">4.5 Hours / Day</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" max="12" min="1" type="range" value="4.5"/>
+<div class="flex justify-between text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">
+<span>Balanced</span>
+<span>Intensive</span>
+<span>Dean's List</span>
+</div>
+</div>
+<!-- Unavailable Days -->
+<div class="bg-surface-container-low p-8 rounded-lg space-y-6">
+<label class="font-semibold text-on-surface block">Rest Days (Blackout)</label>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2 rounded-full border border-outline-variant text-sm font-medium hover:border-primary transition-colors">Mon</button>
+<button class="px-5 py-2 rounded-full border border-outline-variant text-sm font-medium hover:border-primary transition-colors">Tue</button>
+<button class="px-5 py-2 rounded-full border border-outline-variant text-sm font-medium hover:border-primary transition-colors">Wed</button>
+<button class="px-5 py-2 rounded-full border border-outline-variant text-sm font-medium hover:border-primary transition-colors">Thu</button>
+<button class="px-5 py-2 rounded-full border border-outline-variant text-sm font-medium hover:border-primary transition-colors">Fri</button>
+<button class="px-5 py-2 rounded-full bg-primary/20 border border-primary text-primary text-sm font-bold">Sat</button>
+<button class="px-5 py-2 rounded-full bg-primary/20 border border-primary text-primary text-sm font-bold">Sun</button>
+</div>
+</div>
+<!-- Chatbot Defaults -->
+<div class="glass p-8 rounded-lg border-l-4 border-primary space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<h3 class="font-bold text-on-surface">AI Personality Profile</h3>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">The AI is currently set to <span class="text-primary font-bold">Socratic Method</span>. It will ask guiding questions rather than providing direct answers to improve long-term retention.</p>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                            Change Defaults <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: System & Notifications -->
+<div class="space-y-10">
+<div class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-primary">System</h2>
+<div class="space-y-4">
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="text-sm font-medium">Smart Notifications</span>
+</div>
+<div class="w-10 h-5 bg-primary/40 rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="dark_mode" style="font-variation-settings: 'FILL' 1;">dark_mode</span>
+<span class="text-sm font-medium">Midnight Mode</span>
+</div>
+<div class="w-10 h-5 bg-primary/40 rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="psychology">psychology</span>
+<span class="text-sm font-medium">Focus Mode Sync</span>
+</div>
+<div class="w-10 h-5 bg-surface-container-highest rounded-full relative">
+<div class="absolute left-1 top-1 w-3 h-3 bg-outline rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-error">Danger Zone</h2>
+<div class="p-4 bg-error-container/10 border border-error/20 rounded-lg space-y-4">
+<p class="text-xs text-error/80 uppercase tracking-widest font-bold">Panic Mode Settings</p>
+<p class="text-xs text-on-surface-variant">Configure how the app reacts when you fall behind 20%+ of your semester goals.</p>
+<button class="w-full py-3 bg-error text-on-error rounded-full font-bold text-sm">Configure Panic Response</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone Footer Action -->
+<div class="flex justify-center pt-8">
+<button class="text-on-surface-variant/50 text-sm font-medium flex items-center gap-2 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+                Sign out of academic session
+            </button>
+</div>
+</main>
+<!-- NavigationDrawer (Contextual Mobile/Desktop) -->
+<nav class="hidden lg:flex fixed left-0 top-0 flex-col w-80 h-full p-8 bg-[#161b2b] rounded-r-[2rem] z-40 transform -translate-x-full lg:translate-x-0 transition-transform">
+<div class="flex flex-col gap-6 mt-16">
+<div class="mb-12">
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface-variant mb-6">Control Center</h4>
+<div class="space-y-2">
+<a class="flex items-center gap-4 p-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors rounded-xl font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Academic Settings
+                    </a>
+<a class="flex items-center gap-4 p-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors rounded-xl font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span> Notification Preferences
+                    </a>
+<a class="flex items-center gap-4 p-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors rounded-xl font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="archive">archive</span> Archive
+                    </a>
+<a class="flex items-center gap-4 p-4 text-[#a0caff] font-bold bg-[#25293a] rounded-xl font-['Inter'] text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="error">error</span> Panic Mode Settings
+                    </a>
+</div>
+</div>
+<div class="mt-auto p-6 bg-surface-container rounded-lg">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">The Digital Dean</p>
+<p class="text-[10px] text-on-surface-variant">Curating your success</p>
+</div>
+</div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Fall 2024</p>
+</div>
+</div>
+</nav>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e1322]/90 backdrop-blur-lg z-50 rounded-t-[2rem] shadow-[0_-4px_40px_0_rgba(160,202,255,0.06)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Subjects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-4 py-1 scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Profile</span>
+</a>
+</nav>
+</body></html>

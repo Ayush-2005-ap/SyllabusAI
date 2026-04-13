@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI Admin | Course &amp; PYQ Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#dee1f7",
+                        "on-primary-container": "#002b4e",
+                        "on-error": "#690005",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary": "#452b00",
+                        "primary": "#a0caff",
+                        "surface-container-high": "#25293a",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "inverse-surface": "#dee1f7",
+                        "on-secondary": "#1a324c",
+                        "on-secondary-container": "#9fb7d7",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#d2e4ff",
+                        "tertiary": "#ffb955",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary-fixed": "#ffddb4",
+                        "surface-tint": "#a0caff",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-surface": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "background": "#0e1322",
+                        "on-primary-fixed": "#001c37",
+                        "primary-container": "#4f94dd",
+                        "on-secondary-fixed-variant": "#314864",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "surface-dim": "#0e1322",
+                        "outline": "#8b919c",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-bright": "#343949",
+                        "inverse-primary": "#0061a5",
+                        "outline-variant": "#414751",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "surface": "#0e1322",
+                        "secondary": "#b1c8e9",
+                        "on-secondary-fixed": "#011d36",
+                        "surface-container-low": "#161b2b",
+                        "on-primary": "#003259",
+                        "inverse-on-surface": "#2b3040",
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-fixed-dim": "#a0caff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-surface-variant": "#c1c7d2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(160, 202, 255, 0.1);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { min-height: max(884px, 100dvh); }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl shadow-[0_0_40px_rgba(160,202,255,0.06)] px-8 py-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuqFP7bWlEeGoKFUBnSwcOCo0upQn23uKJmcQ4E6d1xcz6JG9ixagjPjZSmx6lLMKSt3S0z19Tpnvp3rinBOxumfXkD-0l5rvLBlmNcOUOhgqrDIA2JAXzk8U5cnzsMw20Sz96i9gKLsD2gdl7d45q_WXc6IsDtWhBLviV2vL2jDqAFVMk9MkRLMYtdR7tpxXe_rMN33LlZVw0svB1hKZXnQLdhTCmAlGAP90ETXTT_ulBpQ4w18EiOANEmUI8TuC6VjFOTjXMdZD4"/>
+</div>
+<span class="text-2xl font-bold tracking-tighter text-[#a0caff] font-headline">SyllabusAI Admin</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#F0F4FF]/70 hover:bg-[#25293a] transition-all duration-300 p-2 rounded-full">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Needs Review List -->
+<section class="lg:col-span-5 space-y-6">
+<div class="flex items-end justify-between mb-2 px-2">
+<div>
+<h2 class="text-3xl font-bold font-headline tracking-tight text-primary">Content Queue</h2>
+<p class="text-on-surface-variant body-lg">6 items awaiting moderator approval</p>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Review Card 1 (Active/Selected) -->
+<div class="bg-surface-container-high p-6 rounded-lg border-l-4 border-primary shadow-xl scale-102 transition-transform cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Needs Review</span>
+<span class="text-on-surface-variant label-sm">2h ago</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1">Advanced Neural Networks</h3>
+<p class="text-on-surface-variant label-sm mb-4">CS-402 • Syllabus &amp; 3 PYQs</p>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-secondary-container flex items-center justify-center text-[10px]">PDF</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-tertiary-container flex items-center justify-center text-[10px]">AI</div>
+</div>
+</div>
+<!-- Review Card 2 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary/20 text-tertiary px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Needs Review</span>
+<span class="text-on-surface-variant label-sm">5h ago</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">Macroeconomics III</h3>
+<p class="text-on-surface-variant label-sm mb-4">ECON-301 • Syllabus Only</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">attachment</span>
+<span class="text-on-surface-variant label-sm">Syllabus_Final_V2.pdf</span>
+</div>
+</div>
+<!-- Review Card 3 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-error/20 text-error px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">High Priority</span>
+<span class="text-on-surface-variant label-sm">1d ago</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-1 group-hover:text-primary transition-colors">Quantum Mechanics</h3>
+<p class="text-on-surface-variant label-sm mb-4">PHYS-202 • 5 PYQs</p>
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="label-sm">Incomplete Metadata</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Detail View -->
+<section class="lg:col-span-7">
+<div class="glass-card rounded-xl overflow-hidden sticky top-24">
+<!-- Hero Header -->
+<div class="relative h-48 w-full overflow-hidden">
+<img alt="Detail View Header" class="w-full h-full object-cover opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQHAyRy1C-4RzSY4T-kkamfscpm8cWiIQJeIkXna3FkBFJ_q7AfiCG4tDyRtB08PHPOPbRzE5M4o6L5_z7RXUI-jfUqOhoRZVCUI8AZga_RQeu9x8KYioVLFlGczqLo3o_fTkiAm5-91CufUYK7ewMLieWhz_Zek51yL4m03Kf0Bjk6HIen3iTk6JQxH83ulnSAPD6Q_Z4JkTfxbuuSKvvzhm9YHvJOJdiE8K-i9ZBE8dbARCMpwyuj82SnHNk3WSCfRbustmDNV3g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-highest to-transparent"></div>
+<div class="absolute bottom-6 left-8">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-primary text-on-primary-container px-3 py-1 rounded-full label-sm font-bold">COURSE ID: CS-402</span>
+<span class="text-on-primary label-sm opacity-80">Submitted by Dr. Aris Thorne</span>
+</div>
+<h1 class="text-4xl font-extrabold font-headline tracking-tighter text-white">Advanced Neural Networks</h1>
+</div>
+</div>
+<!-- Content Body -->
+<div class="p-8 bg-surface-container-highest">
+<div class="flex items-center justify-between mb-8">
+<div class="flex gap-4">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+Approve
+</button>
+<button class="bg-surface-container-high text-on-surface px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">edit</span>
+Edit
+</button>
+</div>
+<button class="text-error px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined">cancel</span>
+Reject
+</button>
+</div>
+<!-- AI Extracted Data Section -->
+<div class="space-y-6">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h4 class="text-lg font-bold text-primary tracking-wide uppercase">AI-Extracted Topics</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container p-4 rounded-md border border-outline-variant/10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase">Module 01</span>
+<span class="text-primary text-[10px] font-bold bg-primary/10 px-2 py-0.5 rounded">98% Confidence</span>
+</div>
+<p class="text-white font-medium">Backpropagation &amp; Optimizer Math</p>
+<p class="text-on-surface-variant body-sm mt-1">Found in Syllabus pg. 4-12</p>
+</div>
+<div class="bg-surface-container p-4 rounded-md border border-outline-variant/10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase">Module 02</span>
+<span class="text-primary text-[10px] font-bold bg-primary/10 px-2 py-0.5 rounded">94% Confidence</span>
+</div>
+<p class="text-white font-medium">Transformer Architectures</p>
+<p class="text-on-surface-variant body-sm mt-1">Extracted from Lecture Notes</p>
+</div>
+<div class="bg-surface-container p-4 rounded-md border border-outline-variant/10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase">Module 03</span>
+<span class="text-tertiary text-[10px] font-bold bg-tertiary/10 px-2 py-0.5 rounded">Low Confidence</span>
+</div>
+<p class="text-white font-medium">Ethics in Synthetic Media</p>
+<p class="text-on-surface-variant body-sm mt-1">Possible mismatch in PYQ 2022</p>
+</div>
+<div class="bg-surface-container p-4 rounded-md border border-outline-variant/10 border-dashed border-primary/40 flex flex-col items-center justify-center opacity-70 group hover:opacity-100 cursor-pointer">
+<span class="material-symbols-outlined text-primary group-hover:scale-125 transition-transform">add_circle</span>
+<span class="label-sm font-bold mt-2">Add Missing Topic</span>
+</div>
+</div>
+<!-- Panic Meter / Urgency -->
+<div class="mt-8 p-6 rounded-lg bg-gradient-to-r from-surface-container to-surface-container-high border-l-4 border-tertiary relative overflow-hidden">
+<div class="relative z-10 flex items-center justify-between">
+<div>
+<h5 class="text-tertiary font-bold uppercase tracking-widest text-xs mb-1">Moderation Deadline</h5>
+<p class="text-on-surface text-xl font-bold">14 Hours Remaining</p>
+</div>
+<div class="h-12 w-12 rounded-full bg-tertiary/20 flex items-center justify-center">
+<div class="h-6 w-6 rounded-full border-2 border-tertiary animate-pulse"></div>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 blur-3xl -mr-16 -mt-16"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e1322]/80 backdrop-blur-xl z-50 rounded-t-[2rem]">
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Users</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-6 py-2">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Content</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">AI Config</span>
+</div>
+</nav>
+<!-- Desktop Sidebar -->
+<div class="hidden md:flex fixed left-0 top-0 h-full w-20 flex-col items-center py-24 gap-12 bg-surface-container-lowest z-40 border-r border-outline-variant/10">
+<button class="text-[#a0caff] font-bold group">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">dashboard</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">group</span>
+</button>
+<div class="relative">
+<button class="text-primary font-bold group">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">library_books</span>
+</button>
+<div class="absolute -right-2 top-0 w-1.5 h-1.5 bg-primary rounded-full"></div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">settings_input_component</span>
+</button>
+</div>
+</body></html>

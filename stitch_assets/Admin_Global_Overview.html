@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#dee1f7",
+                    "on-primary-container": "#002b4e",
+                    "on-error": "#690005",
+                    "tertiary-container": "#c68200",
+                    "on-tertiary": "#452b00",
+                    "primary": "#a0caff",
+                    "surface-container-high": "#25293a",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#090e1c",
+                    "surface-container-highest": "#2f3445",
+                    "secondary-container": "#314864",
+                    "inverse-surface": "#dee1f7",
+                    "on-secondary": "#1a324c",
+                    "on-secondary-container": "#9fb7d7",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#d2e4ff",
+                    "tertiary": "#ffb955",
+                    "on-primary-fixed-variant": "#00497e",
+                    "tertiary-fixed": "#ffddb4",
+                    "surface-tint": "#a0caff",
+                    "secondary-fixed": "#d2e4ff",
+                    "on-surface": "#dee1f7",
+                    "surface-container": "#1a1f2f",
+                    "background": "#0e1322",
+                    "on-primary-fixed": "#001c37",
+                    "primary-container": "#4f94dd",
+                    "on-secondary-fixed-variant": "#314864",
+                    "on-tertiary-fixed-variant": "#633f00",
+                    "surface-dim": "#0e1322",
+                    "outline": "#8b919c",
+                    "on-tertiary-container": "#3c2500",
+                    "surface-bright": "#343949",
+                    "inverse-primary": "#0061a5",
+                    "outline-variant": "#414751",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#b1c8e9",
+                    "surface": "#0e1322",
+                    "secondary": "#b1c8e9",
+                    "on-secondary-fixed": "#011d36",
+                    "surface-container-low": "#161b2b",
+                    "on-primary": "#003259",
+                    "inverse-on-surface": "#2b3040",
+                    "on-tertiary-fixed": "#291800",
+                    "surface-variant": "#2f3445",
+                    "primary-fixed-dim": "#a0caff",
+                    "tertiary-fixed-dim": "#ffb955",
+                    "on-surface-variant": "#c1c7d2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Inter', sans-serif; background-color: #0e1322; }
+        .glass-card { background: rgba(22, 27, 43, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        body { min-height: max(884px, 100dvh); }
+    </style>
+</head>
+<body class="text-on-surface bg-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl shadow-[0_0_40px_rgba(160,202,255,0.06)] px-8 py-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<img alt="Admin User Profile" class="w-full h-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJYDOh-_uIefGEXMOpPkCh0U9kxCyhpwuT72AcqmaZgJrv9iCga6WYSsJ-PXt-w34WqG1aTyI-ItTlKoZDCEA9zSx3uc-5NMTKNcPXFpWP66T3X6AKKaOH5mc8Jt4fppuAuVqlkRFsJXELLOlJ_XB0fgf3vPsCPQqp2EIXV2Tf84leuBGc_R6CXM4cIpF1i8x2ctgipH4VhlppiORzmJ6Q3h637D-Vmee27G7C-EF6eIHmGcgzz2ZBQYK_cVvMBKudJjpHPC99ElR1"/>
+</div>
+<span class="text-2xl font-bold tracking-tighter text-[#a0caff]">SyllabusAI Admin</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#a0caff] font-bold transition-all duration-300 hover:bg-[#25293a] px-4 py-2 rounded-full" href="#">Dashboard</a>
+<a class="text-[#F0F4FF]/70 transition-all duration-300 hover:bg-[#25293a] px-4 py-2 rounded-full" href="#">Users</a>
+<a class="text-[#F0F4FF]/70 transition-all duration-300 hover:bg-[#25293a] px-4 py-2 rounded-full" href="#">Content</a>
+<a class="text-[#F0F4FF]/70 transition-all duration-300 hover:bg-[#25293a] px-4 py-2 rounded-full" href="#">AI Config</a>
+</nav>
+<button class="p-2 rounded-full hover:bg-[#25293a] transition-all duration-300 text-[#a0caff]">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<main class="pt-32 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Display Header -->
+<div class="mb-12">
+<h1 class="text-5xl font-extrabold tracking-tight text-on-surface mb-2">System Overview</h1>
+<p class="text-on-surface-variant text-lg">Real-time performance and user engagement metrics.</p>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="glass-card p-6 rounded-lg border-none flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary text-3xl">group</span>
+<span class="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-1 rounded">+12%</span>
+</div>
+<div>
+<div class="text-3xl font-bold text-on-surface">24,512</div>
+<div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Total Users</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-lg border-none flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary text-3xl">payments</span>
+<span class="text-xs font-bold uppercase tracking-wider text-tertiary bg-tertiary/10 px-2 py-1 rounded">Growth</span>
+</div>
+<div>
+<div class="text-3xl font-bold text-on-surface">8,902</div>
+<div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Active Subs</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-lg border-none flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary-container text-3xl">psychology</span>
+<span class="text-xs font-bold uppercase tracking-wider text-primary-container bg-primary-container/10 px-2 py-1 rounded">High</span>
+</div>
+<div>
+<div class="text-3xl font-bold text-on-surface">142.5k</div>
+<div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Daily Queries</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-lg border-none flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-emerald-400 text-3xl">verified_user</span>
+<div class="flex gap-1">
+<div class="w-1 h-1 rounded-full bg-emerald-400 animate-pulse"></div>
+<div class="w-1 h-1 rounded-full bg-emerald-400"></div>
+<div class="w-1 h-1 rounded-full bg-emerald-400"></div>
+</div>
+</div>
+<div>
+<div class="text-3xl font-bold text-on-surface">99.9%</div>
+<div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">System Health</div>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- User Growth Chart -->
+<div class="lg:col-span-2 glass-card p-8 rounded-lg relative overflow-hidden">
+<div class="flex justify-between items-center mb-10">
+<h3 class="text-xl font-bold">User Growth Trend</h3>
+<select class="bg-surface-container-highest text-sm border-none rounded-full px-4 py-1 text-on-surface-variant focus:ring-1 focus:ring-primary">
+<option>Last 30 Days</option>
+<option>Last 6 Months</option>
+</select>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 px-4">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 40%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 65%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 55%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 85%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 75%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 95%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 80%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 90%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 60%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 88%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary" style="height: 92%"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest px-4">
+<span>Week 01</span><span>Week 02</span><span>Week 03</span><span>Week 04</span>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="glass-card p-8 rounded-lg">
+<h3 class="text-xl font-bold mb-8">Recent Activity</h3>
+<div class="space-y-6">
+<div class="flex gap-4 items-start">
+<div class="mt-1 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(160,202,255,0.6)]"></div>
+<div>
+<p class="text-sm text-on-surface">New syllabus uploaded for <span class="font-bold text-primary">Advanced Algorithms</span></p>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">2 mins ago</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="mt-1 w-2 h-2 rounded-full bg-tertiary shadow-[0_0_10px_rgba(255,185,85,0.6)]"></div>
+<div>
+<p class="text-sm text-on-surface">Tier upgrade: <span class="font-bold">Prof. Sarah Jenkins</span> moved to Pro</p>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">15 mins ago</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="mt-1 w-2 h-2 rounded-full bg-primary-container"></div>
+<div>
+<p class="text-sm text-on-surface">AI Engine v2.4 successfully deployed to Production</p>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">1 hour ago</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="mt-1 w-2 h-2 rounded-full bg-error"></div>
+<div>
+<p class="text-sm text-on-surface">Failed login attempt detected from unknown IP</p>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">3 hours ago</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="mt-1 w-2 h-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-sm text-on-surface">User satisfaction survey received: <span class="font-bold">4.8/5</span></p>
+<span class="text-[10px] uppercase tracking-widest text-on-surface-variant">5 hours ago</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-10 py-3 rounded-full border border-outline-variant text-sm font-bold tracking-widest hover:bg-[#25293a] transition-all uppercase">View Audit Log</button>
+</div>
+</div>
+<!-- Secondary Insights -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+<div class="glass-card p-1 rounded-lg overflow-hidden flex bg-gradient-to-br from-primary/10 to-transparent">
+<div class="p-8 flex-1">
+<h4 class="text-2xl font-bold mb-2">AI Performance</h4>
+<p class="text-on-surface-variant text-sm mb-6">Processing efficiency has increased by 22% this week due to model quantization.</p>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTTxL-PvXPB7LSvN0yiFEdq8-IGWU6QaxvSIfKIofAPHHjAAnaK0jDhJ83kIHBYAaaukfQ8zaScNVZiB72faThxB8SDUL1OGICrS7rQcimhaPbEMrKsBsf_u6pwIpn0_dEIdOhrs0JQx47DcLyn41k0H4_2mi1udlc9ASEebdY8G-b9l0zwyKndY0CTjn86oF_Ukalh9zdWR3WtjFe2r_lmrA1yLTLsAeqigJcEB_msW41puTOOw8MZl3I3C8PfBQmfmgjAOVZgkqk" alt="Engineer 1"/>
+<img class="w-8 h-8 rounded-full border-2 border-background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKSe1BnDPmBl8CsOCCW8lbtME5mBDDYxj-CI5Xwi73WC6zIkHsyijahm6yBMCQ8kru0hNt0RD7RlfKdUygCDMqjvLQjNjI1b_3dw0ZiTzJ91yUzK5U_ueU4i_K8A75AF5fkO7KYDqKtrqd3TqD4QZz-URhjPP5ndVIQiobGbA9bfiDD8wZfmaz6qX394gmLRI1EJ1e1ETSgwJXYrlqFeKNDtBxdFxQPbClvX8mgxEtz9Ubm-8_5es8XgB59giPB2A94N69kCsztT0g" alt="Engineer 2"/>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-background flex items-center justify-center text-[10px] font-bold">+4</div>
+</div>
+<span class="text-xs text-on-surface-variant">Active Engineers</span>
+</div>
+</div>
+<div class="w-32 bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary animate-pulse">speed</span>
+</div>
+</div>
+<div class="glass-card p-8 rounded-lg border border-primary/20 flex items-center gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold uppercase tracking-widest text-tertiary">Premium Insight</span>
+</div>
+<h4 class="text-xl font-bold">Scaling Required</h4>
+<p class="text-on-surface-variant text-sm">Predicted load surge next Tuesday (Finals Week start). Increase node count by 20%.</p>
+</div>
+<button class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full hover:scale-105 active:scale-95 transition-all">Scale Now</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e1322]/80 backdrop-blur-xl rounded-t-[2rem] z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.3)]">
+<a class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-6 py-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider text-[10px] mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff]" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider text-[10px] mt-1">Users</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff]" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider text-[10px] mt-1">Content</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff]" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider text-[10px] mt-1">AI Config</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PYQ Analysis - SyllabusAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-fixed": "#291800",
+                "surface-variant": "#2f3445",
+                "primary-container": "#4f94dd",
+                "primary": "#a0caff",
+                "surface-tint": "#a0caff",
+                "outline": "#8b919c",
+                "inverse-on-surface": "#2b3040",
+                "on-error": "#690005",
+                "inverse-surface": "#dee1f7",
+                "tertiary-container": "#c68200",
+                "on-tertiary-fixed-variant": "#633f00",
+                "on-surface-variant": "#c1c7d2",
+                "on-primary-fixed": "#001c37",
+                "on-tertiary-container": "#3c2500",
+                "surface-container-highest": "#2f3445",
+                "secondary-container": "#314864",
+                "on-secondary-fixed": "#011d36",
+                "on-surface": "#dee1f7",
+                "surface-bright": "#343949",
+                "secondary": "#b1c8e9",
+                "primary-fixed": "#d2e4ff",
+                "background": "#0e1322",
+                "surface": "#0e1322",
+                "on-tertiary": "#452b00",
+                "on-primary-fixed-variant": "#00497e",
+                "tertiary": "#ffb955",
+                "tertiary-fixed": "#ffddb4",
+                "on-secondary-container": "#9fb7d7",
+                "secondary-fixed-dim": "#b1c8e9",
+                "on-error-container": "#ffdad6",
+                "on-primary-container": "#002b4e",
+                "on-secondary-fixed-variant": "#314864",
+                "outline-variant": "#414751",
+                "surface-container-low": "#161b2b",
+                "secondary-fixed": "#d2e4ff",
+                "tertiary-fixed-dim": "#ffb955",
+                "error": "#ffb4ab",
+                "primary-fixed-dim": "#a0caff",
+                "on-background": "#dee1f7",
+                "surface-container": "#1a1f2f",
+                "surface-container-high": "#25293a",
+                "surface-container-lowest": "#090e1c",
+                "surface-dim": "#0e1322",
+                "on-secondary": "#1a324c",
+                "inverse-primary": "#0061a5",
+                "on-primary": "#003259",
+                "error-container": "#93000a"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Inter', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(22, 27, 43, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .ghost-border {
+        border: 1px solid rgba(160, 202, 255, 0.1);
+      }
+      .panic-glow {
+        filter: drop-shadow(0 0 8px rgba(255, 180, 171, 0.4));
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full no borders, tonal shift via surface-container-low">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden ghost-border">
+<img alt="User" data-alt="close-up of a professional modern student avatar with a friendly expression and cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA18rzr0970nF0PWFcTwEsZVkERHnNUSi9DLEYOAIHZ0oxRdq9CoERnvpKageH3toj6kiyNwuVYcZwc1tcFrDTmlBCShvfhP8f4w7-SSFphipMR-UbCXDSJfyBqpc55McDOJ2FC9Qjs0xsZOBVsCXLqhpCOJCuT3cPwN2x2Am3KQki7aZdmzBDFmHQCCCcdyU1bzpJlDo502pNyFivmmze0etAehqyvf9HGIWbgIFopl9_AiV0xUE0A2ZHfPJzSkkcrLSsEZF2drIDr"/>
+</div>
+<span class="font-['Inter'] font-bold tracking-tight text-lg text-[#a0caff]">SyllabusAI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#a0caff] hover:bg-white/5 transition-colors p-2 rounded-full">search</button>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Contextual Header -->
+<section>
+<h1 class="text-3xl font-extrabold tracking-tighter text-primary">Advanced Thermodynamics</h1>
+<p class="text-on-surface-variant font-medium mt-1">PYQ Analysis &amp; Prediction Engine</p>
+</section>
+<!-- Upload & Selection Section (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<div class="md:col-span-7 glass-panel rounded-lg p-8 flex flex-col justify-between">
+<div>
+<h2 class="text-xl font-bold mb-4">Historical Data Repository</h2>
+<p class="text-sm text-on-surface-variant mb-6">Select previous year papers for the AI to cross-reference patterns and weightage.</p>
+<div class="flex flex-wrap gap-3 mb-8">
+<div class="px-5 py-2 bg-primary/20 text-primary border border-primary/30 rounded-full text-sm font-semibold flex items-center gap-2">
+                            2024 Paper <span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div class="px-5 py-2 bg-primary/20 text-primary border border-primary/30 rounded-full text-sm font-semibold flex items-center gap-2">
+                            2023 Paper <span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div class="px-5 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-surface-container-highest transition-colors cursor-pointer">
+                            2022 Paper <span class="material-symbols-outlined text-sm">add</span>
+</div>
+<div class="px-5 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-surface-container-highest transition-colors cursor-pointer">
+                            2021 Paper <span class="material-symbols-outlined text-sm">add</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-bold py-4 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+                    Analyze Papers
+                </button>
+</div>
+<div class="md:col-span-5 glass-panel rounded-lg p-8">
+<h3 class="text-sm font-bold tracking-widest text-tertiary uppercase mb-6">Pattern Insight</h3>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-low rounded-md border-l-4 border-tertiary">
+<p class="text-sm leading-relaxed italic text-on-surface">"70% of papers from the last 5 years prioritize **Entropy and Second Law** in the long-form section. Expect a calculation-heavy question this semester."</p>
+</div>
+<div class="flex items-center gap-4 mt-6">
+<div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[70%]"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">HIGH REPETITION</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Topic Frequency Chart -->
+<section class="glass-panel rounded-lg p-8">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-xl font-bold">Topic Frequency Analysis</h2>
+<p class="text-sm text-on-surface-variant">Occurrence across selected PYQs</p>
+</div>
+<div class="text-right">
+<span class="text-2xl font-black text-primary">84%</span>
+<p class="text-[10px] uppercase tracking-tighter text-on-surface-variant">Data Accuracy</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="relative">
+<div class="flex justify-between mb-1">
+<span class="text-xs font-bold text-on-surface">Laws of Thermodynamics</span>
+<span class="text-xs text-on-surface-variant">12 Occurrences</span>
+</div>
+<div class="w-full h-3 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary-container rounded-full" style="width: 90%;"></div>
+</div>
+</div>
+<div class="relative">
+<div class="flex justify-between mb-1">
+<span class="text-xs font-bold text-on-surface">Phase Equilibria</span>
+<span class="text-xs text-on-surface-variant">8 Occurrences</span>
+</div>
+<div class="w-full h-3 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary-container rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<div class="relative">
+<div class="flex justify-between mb-1">
+<span class="text-xs font-bold text-on-surface">Chemical Potential</span>
+<span class="text-xs text-on-surface-variant">5 Occurrences</span>
+</div>
+<div class="w-full h-3 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary-container rounded-full" style="width: 40%;"></div>
+</div>
+</div>
+<div class="relative">
+<div class="flex justify-between mb-1">
+<span class="text-xs font-bold text-on-surface">Statistical Mechanics Intro</span>
+<span class="text-xs text-on-surface-variant">2 Occurrences</span>
+</div>
+<div class="w-full h-3 bg-surface-container-low rounded-full">
+<div class="h-full bg-primary-container rounded-full" style="width: 15%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Predicted Paper Section -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h2 class="text-2xl font-bold tracking-tight">AI-Predicted Paper (Fall 2024)</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Question 1 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col justify-between border-t border-white/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-error/20 text-error rounded-full text-[10px] font-black uppercase tracking-widest panic-glow">H - Probability</span>
+<span class="text-on-surface-variant text-xs font-medium">15 Marks</span>
+</div>
+<h4 class="text-lg font-bold text-on-surface leading-tight mb-4">Derive the Maxwell-Boltzmann distribution and explain its significance in gas kinetics.</h4>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 py-3 bg-surface-container-high hover:bg-surface-container-highest rounded-full text-sm font-bold transition-colors">View Solution</button>
+<button class="flex-1 py-3 bg-primary-container text-on-primary-container rounded-full text-sm font-bold flex items-center justify-center gap-2">Practice</button>
+</div>
+</div>
+<!-- Question 2 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col justify-between border-t border-white/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-tertiary/20 text-tertiary rounded-full text-[10px] font-black uppercase tracking-widest">M - Probability</span>
+<span class="text-on-surface-variant text-xs font-medium">10 Marks</span>
+</div>
+<h4 class="text-lg font-bold text-on-surface leading-tight mb-4">Discuss the Gibbs-Duhem equation and its application to multicomponent systems.</h4>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 py-3 bg-surface-container-high hover:bg-surface-container-highest rounded-full text-sm font-bold transition-colors">View Solution</button>
+<button class="flex-1 py-3 bg-primary-container text-on-primary-container rounded-full text-sm font-bold flex items-center justify-center gap-2">Practice</button>
+</div>
+</div>
+<!-- Question 3 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col justify-between border-t border-white/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-[10px] font-black uppercase tracking-widest">L - Probability</span>
+<span class="text-on-surface-variant text-xs font-medium">5 Marks</span>
+</div>
+<h4 class="text-lg font-bold text-on-surface leading-tight mb-4">State the Third Law of Thermodynamics and the concept of Absolute Entropy.</h4>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 py-3 bg-surface-container-high hover:bg-surface-container-highest rounded-full text-sm font-bold transition-colors">View Solution</button>
+<button class="flex-1 py-3 bg-primary-container text-on-primary-container rounded-full text-sm font-bold flex items-center justify-center gap-2">Practice</button>
+</div>
+</div>
+<!-- AI Generator Trigger -->
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-center space-y-4">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">model_training</span>
+<div>
+<p class="font-bold text-on-surface">Need more variations?</p>
+<p class="text-xs text-on-surface-variant">Generate another set of predicted questions</p>
+</div>
+<button class="px-8 py-3 bg-surface-container-highest rounded-full text-sm font-bold hover:bg-surface-container-low transition-colors">Regenerate Paper</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Shell (BottomNavBar) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e1322]/90 backdrop-blur-lg z-50 rounded-t-[2rem] shadow-[0_-4px_40px_0_rgba(160,202,255,0.06)] md:hidden">
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-4 py-1 transition-all cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Subjects</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all cursor-pointer">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Schedule</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all cursor-pointer">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Profile</span>
+</div>
+</nav>
+<!-- Side Navigation for Web View (Hidden on Mobile) -->
+<aside class="hidden md:flex fixed left-0 top-0 flex-col w-80 h-full p-8 bg-[#161b2b] rounded-r-[2rem] z-40">
+<div class="mb-12">
+<span class="text-2xl font-black text-[#a0caff] tracking-tighter">SyllabusAI</span>
+</div>
+<div class="flex-1 space-y-6">
+<div class="flex items-center gap-4 text-[#a0caff] font-bold bg-[#25293a] p-4 rounded-lg">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-sm font-medium">PYQ Analysis</span>
+</div>
+<div class="flex items-center gap-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors p-4 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">model_training</span>
+<span class="font-['Inter'] text-sm font-medium">Topic Mastery</span>
+</div>
+<div class="flex items-center gap-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors p-4 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">description</span>
+<span class="font-['Inter'] text-sm font-medium">Study Notes</span>
+</div>
+<div class="flex items-center gap-4 text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors p-4 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Inter'] text-sm font-medium">Archive</span>
+</div>
+</div>
+<div class="mt-auto pt-8 border-t border-white/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Digital Dean" data-alt="close-up of a digital avatar wearing a modern academic robe with high-tech glowing accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Km2PAg6tBGz5GKfQjgU9AwXGncWAmDEwCSiGq1g_zYqJCf-e03k5BHP7ytFs-B24YAZmXoSL4QCGdfi7ywPF51U8FQSLZ4ppNDxGh_BKzDgiIz3DTP_t-NuO__0ZJL25ivQ_0DYqES_jw1UIXehdgKEKQfLYKdPwc-JF8DD_CXUJV6_Ki3hjTKewk4D2Z6-d1ee0eOgxAslhc66WLNPqrzVSvDV-ibFns5K07vqXZlHhy3k5mhh96NTnLrvby4YSuQo7gr-cIK9A"/>
+</div>
+<div>
+<p class="text-sm font-bold text-white">The Digital Dean</p>
+<p class="text-[10px] text-primary/70 uppercase font-black">Curating Success</p>
+</div>
+</div>
+</div>
+</aside>
+</body></html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI - Panic Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#291800",
+                    "surface-variant": "#2f3445",
+                    "primary-container": "#4f94dd",
+                    "primary": "#a0caff",
+                    "surface-tint": "#a0caff",
+                    "outline": "#8b919c",
+                    "inverse-on-surface": "#2b3040",
+                    "on-error": "#690005",
+                    "inverse-surface": "#dee1f7",
+                    "tertiary-container": "#c68200",
+                    "on-tertiary-fixed-variant": "#633f00",
+                    "on-surface-variant": "#c1c7d2",
+                    "on-primary-fixed": "#001c37",
+                    "on-tertiary-container": "#3c2500",
+                    "surface-container-highest": "#2f3445",
+                    "secondary-container": "#314864",
+                    "on-secondary-fixed": "#011d36",
+                    "on-surface": "#dee1f7",
+                    "surface-bright": "#343949",
+                    "secondary": "#b1c8e9",
+                    "primary-fixed": "#d2e4ff",
+                    "background": "#0e1322",
+                    "surface": "#0e1322",
+                    "on-tertiary": "#452b00",
+                    "on-primary-fixed-variant": "#00497e",
+                    "tertiary": "#ffb955",
+                    "tertiary-fixed": "#ffddb4",
+                    "on-secondary-container": "#9fb7d7",
+                    "secondary-fixed-dim": "#b1c8e9",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-container": "#002b4e",
+                    "on-secondary-fixed-variant": "#314864",
+                    "outline-variant": "#414751",
+                    "surface-container-low": "#161b2b",
+                    "secondary-fixed": "#d2e4ff",
+                    "tertiary-fixed-dim": "#ffb955",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#a0caff",
+                    "on-background": "#dee1f7",
+                    "surface-container": "#1a1f2f",
+                    "surface-container-high": "#25293a",
+                    "surface-container-lowest": "#090e1c",
+                    "surface-dim": "#0e1322",
+                    "on-secondary": "#1a324c",
+                    "inverse-primary": "#0061a5",
+                    "on-primary": "#003259",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .panic-glow {
+            box-shadow: 0 0 40px 0 rgba(255, 180, 171, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-red {
+            background: rgba(147, 0, 10, 0.15);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-error selection:text-on-error">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-error/30">
+<img alt="User profile photo" data-alt="close-up portrait of a focused student in a dark room with subtle red ambient light reflecting on their face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALXkWEa-OMs0leD9aqXsu9cfKrkV5U2HiIl2yDOFHkxbpLbtoGV_4V6Aj5HTQtOCn3aOvFSTLd_UCaUt3fk0tPHlfeTHpZ_9o_K8Y7cpKNzuMQ8ThS8qAc0x0e7edL2E27vkc3V1D5DiMTBY0ZWduD1woVLk45eqlhZ65n5RAXdScBG5K931c_pjRgV2Q1jRVaHK1l5WD3CV5TYzLI3vcjuQvwMH5hli0tG58N0weqBcGkbZsQgQVuz-Ns1pJPunBked2_lKpp5rPZ"/>
+</div>
+<span class="text-xl font-black text-error tracking-tighter">SyllabusAI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-white/5 transition-colors text-error">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<div class="px-3 py-1 rounded-full bg-error/20 border border-error/50 text-error font-bold text-xs tracking-widest uppercase">
+                Panic Mode Active
+            </div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Emergency Countdown Banner -->
+<section class="relative overflow-hidden rounded-lg bg-error-container p-8 flex flex-col md:flex-row justify-between items-center gap-6 panic-glow">
+<div class="relative z-10 space-y-2 text-center md:text-left">
+<h1 class="text-3xl md:text-5xl font-black text-on-error-container tracking-tight leading-none uppercase">PANIC MODE</h1>
+<p class="text-on-error-container/80 text-lg font-medium">Exam in 48h: Applied Thermodynamics</p>
+</div>
+<div class="relative z-10 flex gap-4">
+<div class="flex flex-col items-center">
+<span class="text-4xl font-black text-on-error-container">47</span>
+<span class="text-[10px] uppercase tracking-widest font-bold opacity-70">Hours</span>
+</div>
+<span class="text-4xl font-black opacity-30">:</span>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-black text-on-error-container">52</span>
+<span class="text-[10px] uppercase tracking-widest font-bold opacity-70">Mins</span>
+</div>
+</div>
+<!-- Decorative atmospheric blur -->
+<div class="absolute -top-12 -right-12 w-64 h-64 bg-error rounded-full blur-[80px] opacity-40"></div>
+</section>
+<!-- The Survival Plan Bento -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Priority 1: AI Chat (Survival Plan) -->
+<div class="md:col-span-2 space-y-6">
+<div class="bg-surface-container-high rounded-lg p-6 space-y-4 border-l-4 border-error">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h2 class="font-bold text-on-surface">The Digital Dean</h2>
+<p class="text-sm text-on-surface-variant">Survival Strategy Generated</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="glass-red p-4 rounded-md border border-error/10">
+<p class="text-sm leading-relaxed text-on-surface">"Focus ONLY on Carnot cycles and Second Law applications. I've stripped your syllabus to the 14 essential concepts that account for 85% of previous exam questions."</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full bg-error text-on-error text-sm font-bold scale-105 transition-all">Start Survival Lesson 1</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-sm font-medium hover:bg-white/5 transition-colors">Review Cheat Sheet</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4">
+<span class="material-symbols-outlined text-error" data-icon="timer">timer</span>
+<h3 class="font-bold text-on-surface">Next Milestone</h3>
+<p class="text-sm text-on-surface-variant">Chapter 4 Summary Review</p>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/3"></div>
+</div>
+<p class="text-[10px] text-error font-bold uppercase tracking-wider">Due in 2 hours</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4">
+<span class="material-symbols-outlined text-error" data-icon="description">description</span>
+<h3 class="font-bold text-on-surface">Concise Deck</h3>
+<p class="text-sm text-on-surface-variant">12 flashcards left for core mastery</p>
+<button class="text-error text-xs font-bold uppercase tracking-tighter hover:underline">Launch deck</button>
+</div>
+</div>
+</div>
+<!-- Side Content: The "No-Line" Focus -->
+<div class="space-y-6">
+<div class="bg-surface-container p-6 rounded-lg space-y-6">
+<h3 class="text-xs font-black text-on-surface-variant uppercase tracking-[0.2em]">Panic Queue</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center flex-shrink-0">
+<span class="text-xs font-bold text-error">01</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Entropy Derivations</p>
+<p class="text-xs text-on-surface-variant">High Impact • 30 mins</p>
+</div>
+</div>
+<div class="flex items-start gap-4 opacity-50">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="text-xs font-bold text-on-surface-variant">02</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Cycle Efficiency Calc</p>
+<p class="text-xs text-on-surface-variant">Medium • 45 mins</p>
+</div>
+</div>
+<div class="flex items-start gap-4 opacity-50">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="text-xs font-bold text-on-surface-variant">03</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Phase Diagrams</p>
+<p class="text-xs text-on-surface-variant">Low • 15 mins</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 rounded-full border border-error/30 text-error text-xs font-bold uppercase tracking-widest hover:bg-error/10 transition-colors">
+                        View Full Schedule
+                    </button>
+</div>
+<div class="relative overflow-hidden rounded-lg aspect-square">
+<img alt="Focus visual" class="w-full h-full object-cover" data-alt="cinematic top-down shot of a messy desk with a glowing tablet, coffee cup, and open physics textbooks in a dark blue room with red neon accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0hjuqGjRYno3sqsWwtRAjI0rUJFn1H_bFh74pR39VWPhxloKfPwvkY7vgaBbiTATyWHyB_0vjTv98U6iO4fOQ99cuIkrcQVA0xjexE4Wr9DmcuNX9-8LBHZCsJL8VbrUtcZi9j_zi_qY0UqadlIE0duZaW49nwGShyDEvOYh_trqCHTqheLXGIoA3CtjiBLOXWBwn4QZ61l8BC9kp9N1LJBYl6MNKsX8-F7f8Y8NRuMvNbrq6cpCK3ZXJ8GgUU22ezsqWTlVyWLYR"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent flex items-end p-6">
+<p class="text-xs font-bold text-on-surface uppercase tracking-widest">Environment: Focus Red</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e1322]/90 backdrop-blur-lg z-50 rounded-t-[2rem] shadow-[0_-4px_40px_0_rgba(160,202,255,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="library_books">library_books</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Subjects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="calendar_month">calendar_month</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-error/20 text-error rounded-full px-4 py-1 scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="forum" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Profile</span>
+</a>
+</nav>
+<!-- NavigationDrawer Suppressed for High Urgency Focus per UX Goal -->
+</body></html>

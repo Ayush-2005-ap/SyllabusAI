@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#dee1f7",
+                        "on-primary-container": "#002b4e",
+                        "on-error": "#690005",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary": "#452b00",
+                        "primary": "#a0caff",
+                        "surface-container-high": "#25293a",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "inverse-surface": "#dee1f7",
+                        "on-secondary": "#1a324c",
+                        "on-secondary-container": "#9fb7d7",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#d2e4ff",
+                        "tertiary": "#ffb955",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary-fixed": "#ffddb4",
+                        "surface-tint": "#a0caff",
+                        "secondary-fixed": "#d2e4ff",
+                        "on-surface": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "background": "#0e1322",
+                        "on-primary-fixed": "#001c37",
+                        "primary-container": "#4f94dd",
+                        "on-secondary-fixed-variant": "#314864",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "surface-dim": "#0e1322",
+                        "outline": "#8b919c",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-bright": "#343949",
+                        "inverse-primary": "#0061a5",
+                        "outline-variant": "#414751",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "surface": "#0e1322",
+                        "secondary": "#b1c8e9",
+                        "on-secondary-fixed": "#011d36",
+                        "surface-container-low": "#161b2b",
+                        "on-primary": "#003259",
+                        "inverse-on-surface": "#2b3040",
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-fixed-dim": "#a0caff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-surface-variant": "#c1c7d2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .panic-glow {
+            box-shadow: 0 0 20px rgba(255, 185, 85, 0.2);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl shadow-[0_0_40px_rgba(160,202,255,0.06)] flex items-center justify-between px-8 py-4 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEDX5DZsOjVj9nJD1mtwrIrUGcxKhqtkjSi64PCC2B4djkxsM3A-UwC02Lxzf-2ErUnqbO8uTqtTeMECI7fgvlFIap2APo-b3GnvyINPJ3pLdEfIkS0YjKuwLOh5aH24Vd6XUSKro-IYyJtb8tgbAOE1pDUkPJ9T81DNCyv9P0GdhWhQEfEkIq_9JhKOzo0U8Pa2vXFK-WjtMk2Hbz8FI7ZuZv491MzxZNdsgoew3rakABLZcszWCGnTMDn2mOqmT-5g77jUko7hen"/>
+</div>
+<h1 class="text-2xl font-bold tracking-tighter text-[#a0caff] font-headline">SyllabusAI Admin</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-[#F0F4FF]/70 hover:bg-[#25293a] transition-all duration-300 px-4 py-2 rounded-full" href="#">Dashboard</a>
+<a class="text-[#a0caff] font-bold px-4 py-2 rounded-full" href="#">Users</a>
+<a class="text-[#F0F4FF]/70 hover:bg-[#25293a] transition-all duration-300 px-4 py-2 rounded-full" href="#">Content</a>
+<a class="text-[#F0F4FF]/70 hover:bg-[#25293a] transition-all duration-300 px-4 py-2 rounded-full" href="#">AI Config</a>
+</nav>
+<button class="material-symbols-outlined text-[#a0caff] scale-102 active:scale-98 transition-transform p-2 hover:bg-[#25293a] rounded-full">search</button>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-7xl mx-auto">
+<!-- Search & Filter Bar -->
+<div class="mb-12">
+<div class="relative max-w-2xl">
+<span class="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-primary/60">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-5 pl-16 pr-6 text-on-surface focus:ring-2 focus:ring-primary/40 placeholder:text-on-surface-variant/50 transition-all" placeholder="Search student by name, email, or university..." type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Students List -->
+<section class="lg:col-span-7 space-y-4">
+<div class="flex justify-between items-end px-4 mb-6">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface font-headline">Active Scholars</h2>
+<span class="label-sm text-primary font-bold uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full">1,284 TOTAL</span>
+</div>
+<!-- Student Row (Panic Active) -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high p-6 rounded-lg transition-all duration-300 flex items-center gap-6 cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<img alt="Julianne Doe" class="w-14 h-14 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCub283dWbenCx9BA509aYn3VajOMFfPQhVy4QoAXVKrPHZIoalZbohTP_KLTo84sU9SfwaiG-gfoB9jyVz7TtOoTQ75gGbtIStI2QA7NU4CKR-b7Qz0nFp3VsQV9evFGnXMcJTjUrs2tpNL_EDPPmPYJgrMPlcW1uKhA8BCYXWsuMMeu8yCp1aS4gOkUdr2wdEM-pADFRN0RH15KNyhcZbX8a7z5GT57w2N9YeJ3G4Lfb0hrX2dtdVBeBAIAxP22r3wydzOqk8D89T"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-xl font-bold text-on-surface">Julianne Doe</h3>
+<span class="px-2 py-0.5 text-[10px] font-bold bg-tertiary/20 text-tertiary rounded uppercase tracking-tighter">Panic Mode Active</span>
+</div>
+<p class="text-on-surface-variant/70 text-sm">Stanford University • Computer Science</p>
+</div>
+<div class="text-right">
+<div class="text-primary font-bold text-lg leading-none">84%</div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 mt-1">Syllabus Progress</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Student Row -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high p-6 rounded-lg transition-all duration-300 flex items-center gap-6 cursor-pointer">
+<img alt="Marcus Wright" class="w-14 h-14 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzJbmjTwAqd0KMMW8v7Xi0kQfGu5UdOht-rNaTh1VuvikaeoBDikszkARYaI9Ukc3TStslzsYaAcczfVKfeujtZ2VmmWS2W2io6R6KhHX-JW9vVi4sfK31uctk3pzOMwvkz7otriiv8rShL1peXM4A2MRSuEe7YbZhKZd6g2dCZAcX3Hb2vMfxbdokRclHBConkhDxiFJEvfD6WhECawTTY668834y89s1zuHG9fa1xhZUUWmVl2IDAVaQEbxxPBdn5X5iEYZA1g4Y"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-xl font-bold text-on-surface">Marcus Wright</h3>
+</div>
+<p class="text-on-surface-variant/70 text-sm">MIT • Quantum Engineering</p>
+</div>
+<div class="text-right">
+<div class="text-primary font-bold text-lg leading-none">42%</div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 mt-1">Syllabus Progress</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Student Row (Panic Active) -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high p-6 rounded-lg transition-all duration-300 flex items-center gap-6 cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<img alt="Sasha Kim" class="w-14 h-14 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7vPV9HlmN67zGCEOJQ4E201DSNNMA-QeQOH2plDaLh6G3Vt9OYo0T4OrYTYyaDKJCBBhNaV_8nUcRpijY9rZmpvEhTBUACPinIeIdVzjjZ42vv8S7hY9i-chz2jFaT2yr9z2g0iYzJhJ7EX69aF-h7SnQOawYUP6Pv7cK_m5-hrKlUPQatHlFmuIEDt9IafT6ZbFopdg9aP2oJKcwei7wgUOJzWt2GxGK-e9_O2T0k9ybdCFPeOOaA6qz6VNSoDVFlNn0Orgub_lX"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="text-xl font-bold text-on-surface">Sasha Kim</h3>
+<span class="px-2 py-0.5 text-[10px] font-bold bg-tertiary/20 text-tertiary rounded uppercase tracking-tighter">Panic Mode Active</span>
+</div>
+<p class="text-on-surface-variant/70 text-sm">Harvard • Molecular Biology</p>
+</div>
+<div class="text-right">
+<div class="text-primary font-bold text-lg leading-none">12%</div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 mt-1">Syllabus Progress</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</section>
+<!-- Detail Inspector Canvas -->
+<aside class="lg:col-span-5">
+<div class="sticky top-28 bg-surface-container rounded-lg p-8 space-y-8 shadow-2xl border border-outline-variant/10">
+<div class="flex items-start justify-between">
+<div class="space-y-4">
+<div class="w-24 h-24 rounded-2xl overflow-hidden">
+<img alt="Julianne Doe Detailed" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Gk4tpHkR2HC9LhJx33lsQPcznVYUA1G26fmNEMVjkv9cgz7BMLuCVyWp24WW84tbv2ihVgxqaa4l4L5fTRN7mldUlxBa_gXvCGx1wLJbtW5XOLTp4WYzvhDE06a6g291Db9kEj9Zpw5LqlkGd96RXmBqS_1s9nLLqRACf6Hjk_khE5y4DDEReq_AUwiDJUghMI33tiNIsm9AJLGO-_RVqwJqfDPH4Kby01Nv_ZZgTOHPSgPT32CsG4hbetMJ1Z-F3hvs_ot4V25Q"/>
+</div>
+<div>
+<h2 class="text-4xl font-extrabold tracking-tighter text-on-surface leading-tight">Julianne Doe</h2>
+<p class="text-primary font-medium">CS &amp; Mathematics Junior</p>
+</div>
+</div>
+<button class="bg-surface-container-high p-3 rounded-full text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-5 rounded-md border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-2">schedule</span>
+<div class="text-2xl font-bold text-on-surface">42.5h</div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant/60">Study Hours / Week</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-md border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-2">auto_stories</span>
+<div class="text-2xl font-bold text-on-surface">6</div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant/60">Active Subjects</div>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant/80">Permissions &amp; Access</h4>
+<div class="flex items-center justify-between bg-primary/5 p-5 rounded-md border border-primary/20">
+<div>
+<p class="font-bold text-on-surface">Premium Academic Insights</p>
+<p class="text-xs text-on-surface-variant">Access to GPT-4o Syllabus Analysis</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant/80">Current Subjects</h4>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-surface-container-highest/30 rounded-md">
+<span class="text-sm font-medium">Distributed Systems</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-highest/30 rounded-md">
+<span class="text-sm font-medium">Abstract Algebra II</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-tertiary/10 rounded-md">
+<span class="text-sm font-medium text-tertiary">Real-Time Graphics</span>
+<span class="material-symbols-outlined text-tertiary text-sm">warning</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+    View Full Academic Portfolio
+</button>
+</div>
+</aside>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e1322]/80 backdrop-blur-xl shadow-[0_-10px_40px_rgba(0,0,0,0.3)] z-50 md:hidden">
+<button class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff] transition-colors">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-6 py-2">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Users</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff] transition-colors">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">Content</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#F0F4FF]/50 px-6 py-2 hover:text-[#a0caff] transition-colors">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-['Inter'] label-sm uppercase tracking-wider mt-1">AI Config</span>
+</button>
+</nav>
+</body></html>

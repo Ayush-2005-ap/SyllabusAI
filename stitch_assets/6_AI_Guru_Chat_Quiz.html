@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Intelligence Editorial - SyllabusAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#4f94dd",
+                        "primary": "#a0caff",
+                        "surface-tint": "#a0caff",
+                        "outline": "#8b919c",
+                        "inverse-on-surface": "#2b3040",
+                        "on-error": "#690005",
+                        "inverse-surface": "#dee1f7",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-surface-variant": "#c1c7d2",
+                        "on-primary-fixed": "#001c37",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "on-secondary-fixed": "#011d36",
+                        "on-surface": "#dee1f7",
+                        "surface-bright": "#343949",
+                        "secondary": "#b1c8e9",
+                        "primary-fixed": "#d2e4ff",
+                        "background": "#0e1322",
+                        "surface": "#0e1322",
+                        "on-tertiary": "#452b00",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary": "#ffb955",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-secondary-container": "#9fb7d7",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002b4e",
+                        "on-secondary-fixed-variant": "#314864",
+                        "outline-variant": "#414751",
+                        "surface-container-low": "#161b2b",
+                        "secondary-fixed": "#d2e4ff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#a0caff",
+                        "on-background": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "surface-container-high": "#25293a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-dim": "#0e1322",
+                        "on-secondary": "#1a324c",
+                        "inverse-primary": "#0061a5",
+                        "on-primary": "#003259",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+        }
+        .panic-glow {
+            box-shadow: 0 0 40px rgba(255, 185, 85, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0 md:pt-16">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant/15">
+<img alt="User profile photo" data-alt="close-up of a smiling young student wearing stylish glasses in a modern library with warm bokeh lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2GnTeNZogXayIHDutppJwUpcAgqsR6ZEn0KQzQvElQyCdL0dmk3m4p5jdO2Edc4q6jm43ujvjI-AtaSuwcRsHgwGxwf5xp6g6hs3kKcH9y6o7MMfjruibUDJc_40eu2ugsBdfA6X6quyJw1SEar_hQU-jE5CFCID0rLfPTO4HcSXNi8mjW7mljJtdT6ze7QIe4Uo_hMz9aRdV8iRuXhoGX0XRaGBQjtJuo-Ywa6lgq3WL6JQFJMuz9qXjVUPaY6GyhaHOPS8vRUXP"/>
+</div>
+<h1 class="font-['Inter'] font-bold tracking-tight text-lg text-[#a0caff]">SyllabusAI</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-white/5 transition-colors scale-95 duration-200 rounded-full text-[#a0caff]">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</div>
+</nav>
+<main class="max-w-screen-xl mx-auto px-6 pt-6 flex flex-col md:flex-row gap-8">
+<!-- Main Chat & Quiz Content -->
+<section class="flex-grow space-y-8">
+<!-- Chat Interface Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_0_20px_rgba(160,202,255,0.3)]">
+<span class="material-symbols-outlined text-2xl" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<h2 class="text-xl font-black text-primary tracking-tighter">AI GURU</h2>
+<span class="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Active Intelligence Session</span>
+</div>
+</div>
+<div class="relative">
+<select class="bg-surface-container-low text-primary border-none rounded-full px-4 py-2 text-sm font-medium focus:ring-2 ring-primary/20 appearance-none pr-10">
+<option>Quantum Physics 101</option>
+<option>Advanced Microeconomics</option>
+<option>Data Structures</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2 text-primary pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Chat Area (Scrollable) -->
+<div class="h-[400px] overflow-y-auto space-y-6 pr-2 custom-scrollbar">
+<!-- AI Message -->
+<div class="flex items-start gap-4 max-w-[85%]">
+<div class="flex-grow bg-surface-container-high p-6 rounded-tr-lg rounded-br-lg rounded-bl-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+<p class="body-lg text-on-surface/90">Welcome back! I've analyzed your recent notes on <span class="text-primary font-bold">Schrödinger's Equation</span>. Ready to run a quick diagnostic quiz or should we dive into the derivations?</p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-4 max-w-[85%] ml-auto justify-end">
+<div class="flex-grow bg-primary-container p-6 rounded-tl-lg rounded-bl-lg rounded-br-lg text-on-primary-container">
+<p class="body-lg font-medium">Let's try the diagnostic quiz first. I'm feeling a bit shaky on the probability density interpretations.</p>
+</div>
+</div>
+<!-- Quiz Mode Activation (Asymmetric Bento) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-3 bg-surface-container p-8 rounded-lg border-l-4 border-primary shadow-xl relative">
+<div class="absolute top-4 right-6 flex items-center gap-2">
+<span class="text-xs font-bold text-primary">QUESTION 1/5</span>
+<div class="w-16 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-1/5 h-full bg-primary"></div>
+</div>
+</div>
+<h3 class="headline-md mb-8 text-on-surface">What does the square of the absolute value of the wavefunction |ψ(x,t)|² represent?</h3>
+<div class="grid grid-cols-1 gap-4">
+<button class="flex items-center justify-between p-5 rounded-md bg-surface-container-high hover:bg-primary/20 transition-all text-left group">
+<span class="body-lg">The energy of the particle at position x</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-primary" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+<button class="flex items-center justify-between p-5 rounded-md bg-surface-container-high border border-primary/30 text-left group ring-2 ring-primary/40">
+<span class="body-lg font-bold text-primary">The probability density of finding the particle at position x</span>
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+</button>
+<button class="flex items-center justify-between p-5 rounded-md bg-surface-container-high hover:bg-primary/20 transition-all text-left group">
+<span class="body-lg">The momentum vector of the particle</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-primary" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+<button class="flex items-center justify-between p-5 rounded-md bg-surface-container-high hover:bg-primary/20 transition-all text-left group">
+<span class="body-lg">The acceleration due to the potential field</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 text-primary" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+<!-- Quiz Score/Stats Side Card -->
+<div class="md:col-span-1 space-y-4">
+<div class="bg-surface-container-low p-6 rounded-lg text-center">
+<span class="label-sm uppercase tracking-widest text-on-surface-variant block mb-2">Live Score</span>
+<div class="text-4xl font-black text-primary">850</div>
+<div class="text-[10px] text-tertiary mt-2">🔥 3X STREAK</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg">
+<span class="label-sm uppercase tracking-widest text-on-surface-variant block mb-4">Focus Areas</span>
+<ul class="space-y-3">
+<li class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-error text-xs" data-icon="warning">warning</span>
+<span>Wave-Particle Duality</span>
+</li>
+<li class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-primary text-xs" data-icon="check_circle">check_circle</span>
+<span>Operators</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Bottom Bar -->
+<div class="relative mt-8">
+<div class="flex items-center gap-4 bg-surface-container-high/50 backdrop-blur-md p-2 rounded-full border border-white/5">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="mic">mic</span>
+</button>
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 px-2" placeholder="Ask Guru about your syllabus..." type="text"/>
+<button class="px-6 py-2 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-bold text-sm transition-transform active:scale-95">
+                        Quiz Me
+                    </button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary">
+<span class="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Navigation Drawer / Sidebar Settings -->
+<aside class="hidden md:flex flex-col w-80 h-[calc(100vh-8rem)] p-8 bg-[#161b2b] rounded-lg">
+<div class="mb-10 text-left">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="User Profile Avatar" data-alt="a stylized high-tech robot bust with glowing blue fiber optic cables and a friendly digital visor face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSGtR0HXt5GFcqUVaIJ672dAvWZevRVRWV3griv-8DwB3WNjVI6mZQc7r15cYl8Nv3h435hh0UayRO1PsfDPgMaf_lvJM_yV93I2YwVLaZGQIEHnLR8Q0YsHQWKlpUaH9CAV1ZgECy39URpy0o6jBDEjrSaWS3zWa7dz_cCzAj8hnwXf5DzM85EIVJe7b6yFjRin3BFNLumIaBDA02QVqN0UlBhwQBHCBcUQnCP4EF0X1i6_ygUDH0_ih7NQdNLyktyP8xaX-Q-p-_"/>
+</div>
+<div>
+<h4 class="font-['Inter'] text-sm font-bold text-[#a0caff]">The Digital Dean</h4>
+<p class="text-[10px] text-[#F0F4FF]/70 uppercase tracking-widest">Fall 2024</p>
+</div>
+</div>
+</div>
+<div class="space-y-8">
+<div>
+<h5 class="label-sm uppercase tracking-tighter text-on-surface-variant mb-4">Guru Personality</h5>
+<div class="grid grid-cols-3 gap-2">
+<button class="p-2 rounded-md bg-[#25293a] text-[#a0caff] border border-primary/20 text-[10px] font-bold">SOKRATIC</button>
+<button class="p-2 rounded-md bg-surface-container-lowest text-[#F0F4FF]/50 text-[10px] font-bold hover:bg-[#25293a] transition-colors">PROFESSOR</button>
+<button class="p-2 rounded-md bg-surface-container-lowest text-[#F0F4FF]/50 text-[10px] font-bold hover:bg-[#25293a] transition-colors">PEER</button>
+</div>
+</div>
+<div>
+<h5 class="label-sm uppercase tracking-tighter text-on-surface-variant mb-4">Difficulty Level</h5>
+<input class="w-full accent-primary h-1 bg-surface-container-highest rounded-full appearance-none cursor-pointer" type="range"/>
+<div class="flex justify-between mt-2 text-[10px] font-bold text-[#F0F4FF]/50">
+<span>FRESHMAN</span>
+<span>PHD</span>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 p-3 rounded-md text-[#a0caff] font-bold bg-[#25293a] transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-sm">Academic Settings</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-md text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+<span class="font-['Inter'] text-sm">Notification Preferences</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-md text-[#F0F4FF]/70 hover:bg-[#25293a] transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="archive">archive</span>
+<span class="font-['Inter'] text-sm">Archive</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-md text-error hover:bg-error/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="error">error</span>
+<span class="font-['Inter'] text-sm">Panic Mode Settings</span>
+</a>
+</nav>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e1322]/90 backdrop-blur-lg z-50 rounded-t-[2rem] shadow-[0_-4px_40px_0_rgba(160,202,255,0.06)]">
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 transition-all scale-105 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 transition-all scale-105 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Subjects</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 transition-all scale-105 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Schedule</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-4 py-1 transition-all scale-105 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="forum" style="font-variation-settings: 'FILL' 1;">forum</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#F0F4FF]/50 transition-all scale-105 duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

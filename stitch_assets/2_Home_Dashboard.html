@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SyllabusAI - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#291800",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#4f94dd",
+                        "primary": "#a0caff",
+                        "surface-tint": "#a0caff",
+                        "outline": "#8b919c",
+                        "inverse-on-surface": "#2b3040",
+                        "on-error": "#690005",
+                        "inverse-surface": "#dee1f7",
+                        "tertiary-container": "#c68200",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-surface-variant": "#c1c7d2",
+                        "on-primary-fixed": "#001c37",
+                        "on-tertiary-container": "#3c2500",
+                        "surface-container-highest": "#2f3445",
+                        "secondary-container": "#314864",
+                        "on-secondary-fixed": "#011d36",
+                        "on-surface": "#dee1f7",
+                        "surface-bright": "#343949",
+                        "secondary": "#b1c8e9",
+                        "primary-fixed": "#d2e4ff",
+                        "background": "#0e1322",
+                        "surface": "#0e1322",
+                        "on-tertiary": "#452b00",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary": "#ffb955",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-secondary-container": "#9fb7d7",
+                        "secondary-fixed-dim": "#b1c8e9",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002b4e",
+                        "on-secondary-fixed-variant": "#314864",
+                        "outline-variant": "#414751",
+                        "surface-container-low": "#161b2b",
+                        "secondary-fixed": "#d2e4ff",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#a0caff",
+                        "on-background": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "surface-container-high": "#25293a",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-dim": "#0e1322",
+                        "on-secondary": "#1a324c",
+                        "inverse-primary": "#0061a5",
+                        "on-primary": "#003259",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar Component -->
+<header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User Profile" data-alt="Portrait of a young male student with a modern hairstyle wearing a casual sweater, clean minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdXx8y-wrW1Mp-568FDNZr0K5Z6nbCJ23ztJOEV3ynHzs6dfOrrFenAMLvNNhYXCxlOnzHw9_0gqRp-jxYSzVYXpJ3JhY4KKa6sE94y630eXNCI3VpnznJHMRPenYBF4z0tJg6_X0YhRtUMOa7zVmZC1UtmrkZMXibU4ZKmrYjGsS1Iqmb_LkppC7UZdDWS-5rWA2u1Vf7FeOBGMcCrCmvs50PwoT4MBadwYefRJmAIDTPhDeR_Q__nCUzR6RYMx4PLu81gnBotk-T"/>
+</div>
+<span class="text-xl font-black text-[#a0caff] tracking-tighter">SyllabusAI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#F0F4FF]/70 hover:bg-white/5 transition-colors p-2 rounded-full">search</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+<!-- Welcome Header -->
+<section class="mb-10">
+<p class="text-primary font-label text-[10px] uppercase tracking-[0.2em] mb-1">Fall 2024 Semester</p>
+<h1 class="text-4xl font-bold font-headline tracking-tight leading-none">Good morning, Ayush</h1>
+<p class="text-on-surface/60 mt-2 font-medium">You have 3 focus tasks for today.</p>
+</section>
+<!-- Subject Cards Horizontal Scroll -->
+<section class="mb-12">
+<div class="flex justify-between items-end mb-4">
+<h2 class="text-sm font-bold font-headline uppercase tracking-widest text-on-surface/50">Active Subjects</h2>
+<span class="text-primary text-xs font-semibold">View All</span>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar -mx-6 px-6">
+<!-- Card 1: Urgent -->
+<div class="min-w-[240px] bg-surface-container-low p-6 rounded-lg relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error/10 blur-[60px] rounded-full"></div>
+<div class="flex justify-between items-start mb-8 relative z-10">
+<div class="relative">
+<svg class="w-12 h-12 transform -rotate-90">
+<circle class="text-surface-container-highest" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-error" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="31.4" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold">75%</span>
+</div>
+<div class="bg-error/20 px-3 py-1 rounded-full">
+<span class="text-error text-[10px] font-bold uppercase tracking-tight">12 Days</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 class="text-lg font-bold leading-tight">Advanced Thermodynamics</h3>
+<p class="text-on-surface/50 text-xs mt-1">Midterm Preparation</p>
+</div>
+</div>
+<!-- Card 2: Neutral -->
+<div class="min-w-[240px] bg-surface-container-low p-6 rounded-lg relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 blur-[60px] rounded-full"></div>
+<div class="flex justify-between items-start mb-8 relative z-10">
+<div class="relative">
+<svg class="w-12 h-12 transform -rotate-90">
+<circle class="text-surface-container-highest" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="75.3" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold">40%</span>
+</div>
+<div class="bg-tertiary/20 px-3 py-1 rounded-full">
+<span class="text-tertiary text-[10px] font-bold uppercase tracking-tight">24 Days</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 class="text-lg font-bold leading-tight">Neural Networks</h3>
+<p class="text-on-surface/50 text-xs mt-1">Architecture Design</p>
+</div>
+</div>
+<!-- Card 3: Safe -->
+<div class="min-w-[240px] bg-surface-container-low p-6 rounded-lg relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full"></div>
+<div class="flex justify-between items-start mb-8 relative z-10">
+<div class="relative">
+<svg class="w-12 h-12 transform -rotate-90">
+<circle class="text-surface-container-highest" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="100.4" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold">20%</span>
+</div>
+<div class="bg-primary/20 px-3 py-1 rounded-full">
+<span class="text-primary text-[10px] font-bold uppercase tracking-tight">45 Days</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 class="text-lg font-bold leading-tight">Digital Ethics</h3>
+<p class="text-on-surface/50 text-xs mt-1">Research Thesis</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Today's Plan -->
+<section class="mb-12">
+<h2 class="text-sm font-bold font-headline uppercase tracking-widest text-on-surface/50 mb-6">Today's Plan</h2>
+<div class="space-y-4">
+<!-- Topic Card 1 -->
+<div class="bg-surface-container-high/40 backdrop-blur-md p-5 rounded-md flex items-center justify-between group hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-5 items-center">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-primary/20 text-primary uppercase">Thermodynamics</span>
+<span class="text-on-surface/40 text-[10px] font-medium tracking-wide">09:00 AM — 10:30 AM</span>
+</div>
+<h4 class="font-bold text-on-surface">Entropy &amp; Second Law</h4>
+</div>
+</div>
+<button class="bg-primary text-on-primary-container px-6 py-2 rounded-full text-xs font-bold uppercase tracking-tighter hover:shadow-[0_0_20px_rgba(160,202,255,0.4)] transition-shadow">Start</button>
+</div>
+<!-- Topic Card 2 -->
+<div class="bg-surface-container-high/40 backdrop-blur-md p-5 rounded-md flex items-center justify-between group hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-5 items-center">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-tertiary/20 text-tertiary uppercase">Neural Networks</span>
+<span class="text-on-surface/40 text-[10px] font-medium tracking-wide">1:00 PM — 3:00 PM</span>
+</div>
+<h4 class="font-bold text-on-surface">Backpropagation Theory</h4>
+</div>
+</div>
+<button class="bg-white/5 text-on-surface/70 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-tighter border border-white/10 hover:bg-white/10 transition-colors">Queue</button>
+</div>
+</div>
+</section>
+<!-- Stats & Heatmap Bento -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Streak Banner -->
+<div class="bg-gradient-to-br from-primary-container to-primary p-8 rounded-lg flex flex-col justify-between aspect-video md:aspect-auto">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-white/20 backdrop-blur-xl rounded-full">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<span class="text-white/80 font-label text-[10px] font-bold uppercase tracking-widest">Momentum</span>
+</div>
+<div>
+<h3 class="text-white text-5xl font-black tracking-tighter">7 Day</h3>
+<p class="text-white/90 font-medium">Study streak maintainted. Keep it up!</p>
+</div>
+</div>
+<!-- Heatmap -->
+<div class="bg-surface-container-low p-6 rounded-lg">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-bold font-headline uppercase tracking-widest text-on-surface/50">Study Activity</h3>
+<span class="text-[10px] text-on-surface/40">Past 3 Months</span>
+</div>
+<div class="grid grid-cols-14 gap-1.5 overflow-hidden">
+<!-- Simple Heatmap Grid Representation -->
+<div class="flex flex-wrap gap-1.5">
+<!-- Simulated small heatmap squares -->
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/30 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/90 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/30 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/30 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/90 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/30 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/60 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/10 rounded-sm"></div>
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+</div>
+</div>
+<div class="mt-4 flex gap-4">
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-primary/10"></div>
+<span class="text-[9px] font-bold text-on-surface/40 uppercase">Low</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-primary/90"></div>
+<span class="text-[9px] font-bold text-on-surface/40 uppercase">High Intensity</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e1322]/90 backdrop-blur-lg z-50 rounded-t-[2rem] shadow-[0_-4px_40px_0_rgba(160,202,255,0.06)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-[#4f94dd]/20 text-[#a0caff] rounded-full px-4 py-1 scale-105 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Home</span>
+</a>
+<!-- Subjects -->
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Subjects</span>
+</a>
+<!-- Schedule -->
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Schedule</span>
+</a>
+<!-- Chat -->
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Chat</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-[#F0F4FF]/50 hover:text-[#a0caff] transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">Profile</span>
+</a>
+</nav>
+<!-- FAB Suppression: Not rendering FAB on Dashboard per rule (Home context check) - wait, instruction says suppress on Settings/Details, but standard Material FABs usually go on Home. Re-reading instructions: "You MUST ONLY render the FAB if the screen's primary purpose aligns perfectly with the FAB's action... suppress on Settings, Profile, Details." Home is allowed. Let's add a "New Study Session" FAB. -->
+<div class="fixed bottom-28 right-6 z-40">
+<button class="w-14 h-14 bg-gradient-to-br from-primary to-primary-container rounded-full flex items-center justify-center shadow-lg shadow-primary/20 text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">add</span>
+</button>
+</div>
+</body></html>
