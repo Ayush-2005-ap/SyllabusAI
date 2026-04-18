@@ -1,0 +1,44 @@
+# ─── Python environment ────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+.eggs/
+*.egg
+
+# ─── Environment secrets ───────────────────────────────────────
+.env
+.env.local
+.env.*
+
+# ─── ChromaDB vector store (large, rebuilt on deploy) ──────────
+chroma_db/
+chroma/
+*.chroma
+
+# ─── Uploaded PDFs ─────────────────────────────────────────────
+uploads/
+*.pdf
+
+# ─── Model / ML caches ─────────────────────────────────────────
+*.bin
+*.onnx
+*.pt
+*.pth
+.cache/
+
+# ─── OS & Editor ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ─── Logs ──────────────────────────────────────────────────────
+*.log
+logs/

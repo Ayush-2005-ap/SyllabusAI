@@ -1,21 +1,36 @@
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { Drawer } from 'expo-router/drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { colors } from '../../src/utils/colors';
 
 export default function DrawerLayout() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome to the main app layout. Drawer goes here.</Text>
-    </View>
+    <Drawer
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.background },
+        headerTintColor: colors.textPrimary,
+        drawerStyle: { backgroundColor: colors.cardBackground },
+        drawerActiveTintColor: colors.primary,
+        drawerInactiveTintColor: colors.textSecondary,
+      }}
+    >
+      <Drawer.Screen
+        name="home"
+        options={{
+          drawerLabel: 'Home',
+          title: 'Dashboard',
+          drawerIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
+        }}
+      />
+      <Drawer.Screen
+        name="subjects"
+        options={{
+          drawerLabel: 'Subjects',
+          title: 'My Subjects',
+          headerShown: false, // Stack navigator inside handles headers
+          drawerIcon: ({ color, size }) => <Ionicons name="library-outline" size={size} color={color} />,
+        }}
+      />
+    </Drawer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0A0F1E',
-  },
-  text: {
-    color: '#F0F4FF',
-  },
-});

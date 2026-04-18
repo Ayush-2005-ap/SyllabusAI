@@ -14,7 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 const authRoutes = require('./routes/auth.routes');
+const subjectRoutes = require('./routes/subject.routes');
+const topicRoutes = require('./routes/topic.routes');
+
 app.use('/api/auth', authRoutes);
+app.use('/api/subjects', subjectRoutes);
+app.use('/api/topics', topicRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -22,10 +27,7 @@ app.get('/health', (req, res) => {
 });
 
 // Database connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('MongoDB connection established successfully'))
 .catch((err) => console.error('MongoDB connection failed:', err.message));
 

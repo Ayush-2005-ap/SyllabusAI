@@ -1,0 +1,53 @@
+You are an expert React Native + Expo engineer.
+
+I currently have a broken mobile project (React Native CLI based) due to dependency conflicts while trying to integrate Expo.
+
+Your task is to:
+
+1. DO NOT delete or modify my existing project folder named "mobile".
+2. Create a NEW fully working Expo-based project in a separate folder named "mobile-clean".
+
+3. Initialize the new project using:
+   npx create-expo-app mobile-clean
+
+4. Ensure the new project runs successfully using:
+   npx expo start
+
+5. Then carefully migrate my code from the old "mobile" project to the new "mobile-clean" project.
+
+Migration rules:
+- Copy ONLY relevant source code:
+  - components/
+  - screens/
+  - assets/
+  - utils/ or services/
+  - any custom hooks or logic files
+
+- DO NOT copy:
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - android/ or ios/ folders
+  - any build or config files from old project
+
+6. Reinstall all required dependencies in the new Expo project using:
+   npx expo install <package-name>
+
+7. Ensure compatibility with Expo:
+   - Replace any unsupported native modules with Expo-compatible alternatives
+   - Fix imports if needed (e.g., react-native vs expo equivalents)
+
+8. Update App.js (or entry file) so that the app runs exactly like the original project.
+
+9. Verify:
+   - No dependency conflicts
+   - App runs successfully on Expo
+   - No runtime errors
+
+10. Provide:
+   - Final folder structure
+   - List of installed dependencies
+   - Any changes made during migration
+
+Goal:
+A clean, fully working Expo project ("mobile-clean") that replicates the functionality of my original "mobile" project, without modifying or deleting the original codebase.

@@ -1,0 +1,11 @@
+flask
+flask-cors
+flask-sse
+anthropic
+langchain
+langchain-anthropic
+langchain-community
+chromadb
+pymupdf
+pdfplumber
+python-dotenv

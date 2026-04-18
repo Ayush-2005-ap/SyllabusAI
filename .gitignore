@@ -1,0 +1,53 @@
+# ─── OS & Editor ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# ─── Environment files (NEVER commit secrets) ──────────────────
+.env
+.env.local
+.env.development
+.env.production
+*.env
+
+# ─── Logs ──────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Node / backend ────────────────────────────────────────────
+node_modules/
+dist/
+build/
+
+# ─── Python / ai-backend ───────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+.eggs/
+chroma_db/
+
+# ─── Expo / React Native ───────────────────────────────────────
+.expo/
+.expo-shared/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# ─── Uploads (user files, not code) ────────────────────────────
+backend/uploads/*
+!backend/uploads/.gitkeep
