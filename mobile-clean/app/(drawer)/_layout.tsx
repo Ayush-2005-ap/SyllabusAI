@@ -31,6 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Dashboard',
           tabBarLabel: 'Home',
+          headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon focused={focused} iconName={focused ? 'home' : 'home-outline'} color={color} />
           ),
@@ -52,6 +53,7 @@ export default function TabLayout() {
         options={{
           title: 'Schedule',
           tabBarLabel: 'Schedule',
+          headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon focused={focused} iconName={focused ? 'calendar' : 'calendar-outline'} color={color} />
           ),
@@ -62,6 +64,7 @@ export default function TabLayout() {
         options={{
           title: 'AI Guru',
           tabBarLabel: 'Chat',
+          headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon focused={focused} iconName={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'} color={color} />
           ),
@@ -72,9 +75,19 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarLabel: 'Profile',
+          headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <TabIcon focused={focused} iconName={focused ? 'person' : 'person-outline'} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="edit-profile"
+        options={{
+          title: 'Edit Profile',
+          tabBarLabel: 'Edit Profile',
+          href: null, // hidden from tab bar
+          headerShown: false,
         }}
       />
     </Tabs>

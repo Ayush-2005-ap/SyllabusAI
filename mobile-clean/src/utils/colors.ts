@@ -1,43 +1,70 @@
-// SyllabusAI — Stitch Design System Colors
-export const colors = {
-  // Core surfaces
-  background:           '#0e1322',
-  surface:              '#0e1322',
+// ─── Dark Mode (Stitch Design) ───────────────────────────────
+export const darkColors = {
+  background:             '#0e1322',
+  surface:                '#0e1322',
   surfaceContainerLowest: '#090e1c',
-  surfaceContainerLow:  '#161b2b',
-  surfaceContainer:     '#1a1f2f',
-  surfaceContainerHigh: '#25293a',
-  surfaceContainerHighest: '#2f3445',
-
-  // Brand
-  primary:              '#a0caff',   // light blue — primary accent
-  primaryContainer:     '#4f94dd',   // deeper blue — gradients & active states
-  onPrimary:            '#003259',
-  onPrimaryContainer:   '#002b4e',
-
-  // Text
-  onSurface:            '#dee1f7',   // primary text
-  onBackground:         '#dee1f7',
-  onSurfaceVariant:     '#c1c7d2',   // secondary text
-
-  // Semantic
-  tertiary:             '#ffb955',   // warning / deadline amber
-  tertiaryContainer:    '#c68200',
-  error:                '#ffb4ab',   // panic / danger
-  errorContainer:       '#93000a',
-
-  // Utility
-  secondary:            '#b1c8e9',
-  secondaryContainer:   '#314864',
-  outline:              '#8b919c',
-  outlineVariant:       '#414751',
-
-  // Legacy aliases (keep back-compat with existing code)
-  cardBackground:       'rgba(22,27,43,0.7)',
-  cardBorder:           'rgba(255,255,255,0.07)',
-  textPrimary:          '#dee1f7',
-  textSecondary:        '#c1c7d2',
-  success:              '#4ade80',
-  warning:              '#ffb955',
-  danger:               '#ffb4ab',
+  surfaceContainerLow:    '#161b2b',
+  surfaceContainer:       '#1a1f2f',
+  surfaceContainerHigh:   '#25293a',
+  surfaceContainerHighest:'#2f3445',
+  primary:                '#a0caff',
+  primaryContainer:       '#4f94dd',
+  onPrimary:              '#003259',
+  onPrimaryContainer:     '#002b4e',
+  onSurface:              '#dee1f7',
+  onBackground:           '#dee1f7',
+  onSurfaceVariant:       '#c1c7d2',
+  tertiary:               '#ffb955',
+  tertiaryContainer:      '#c68200',
+  error:                  '#ffb4ab',
+  errorContainer:         '#93000a',
+  secondary:              '#b1c8e9',
+  secondaryContainer:     '#314864',
+  outline:                '#8b919c',
+  outlineVariant:         '#414751',
+  // legacy aliases
+  cardBackground:         'rgba(22,27,43,0.7)',
+  cardBorder:             'rgba(255,255,255,0.07)',
+  textPrimary:            '#dee1f7',
+  textSecondary:          '#c1c7d2',
+  success:                '#4ade80',
+  warning:                '#ffb955',
+  danger:                 '#ffb4ab',
 };
+
+// ─── Light Mode ──────────────────────────────────────────────
+export const lightColors = {
+  background:             '#f0f4ff',
+  surface:                '#f0f4ff',
+  surfaceContainerLowest: '#ffffff',
+  surfaceContainerLow:    '#e8eef9',
+  surfaceContainer:       '#dde4f0',
+  surfaceContainerHigh:   '#d0d9ec',
+  surfaceContainerHighest:'#c2cfe0',
+  primary:                '#0061a5',
+  primaryContainer:       '#4f94dd',
+  onPrimary:              '#ffffff',
+  onPrimaryContainer:     '#001c37',
+  onSurface:              '#0e1322',
+  onBackground:           '#0e1322',
+  onSurfaceVariant:       '#44474f',
+  tertiary:               '#8c5800',
+  tertiaryContainer:      '#ffb955',
+  error:                  '#ba1a1a',
+  errorContainer:         '#ffdad6',
+  secondary:              '#1a324c',
+  secondaryContainer:     '#d2e4ff',
+  outline:                '#74777f',
+  outlineVariant:         '#c4c6d0',
+  // legacy aliases
+  cardBackground:         'rgba(220,228,245,0.85)',
+  cardBorder:             'rgba(0,0,0,0.08)',
+  textPrimary:            '#0e1322',
+  textSecondary:          '#44474f',
+  success:                '#15803d',
+  warning:                '#8c5800',
+  danger:                 '#ba1a1a',
+};
+
+// Default export is dark (used by files that import colors directly)
+export const colors = darkColors;

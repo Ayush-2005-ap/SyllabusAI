@@ -9,6 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from '../src/context/AuthContext';
 import { SubjectProvider } from '../src/context/SubjectContext';
 import { AppProvider } from '../src/context/AppContext';
+import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -30,17 +31,28 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <AppProvider>
-        <SubjectProvider>
-          <AuthProvider>
-            <StatusBar style="light" />
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="(auth)" />
-              <Stack.Screen name="(drawer)" />
-            </Stack>
-          </AuthProvider>
-        </SubjectProvider>
-      </AppProvider>
+      <ThemeProvider>
+        <AppProvider>
+          <SubjectProvider>
+            <AuthProvider>
+              <ThemedRoot />
+            </AuthProvider>
+          </SubjectProvider>
+        </AppProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
+  );
+}
+
+function ThemedRoot() {
+  const { isDark } = useTheme();
+  return (
+    <>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(drawer)" />
+      </Stack>
+    </>
   );
 }
