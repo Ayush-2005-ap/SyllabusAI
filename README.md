@@ -97,6 +97,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Developed with ❤️ by Ayush Pandey**
+**Developed with ❤️ by Ayush Pandey, Atharv Tomar, Anmol Tomar, Harsh Chauhan**
+UI SCREENSHOTS LINK FOR REFERENCE : https://drive.google.com/file/d/1aw9DRE7ODfAPUry96d3Nsd3MSsW2hf6x/view?usp=sharing
 
 ***
