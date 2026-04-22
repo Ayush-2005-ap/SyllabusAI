@@ -1,7 +1,7 @@
 import os
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel, Field
@@ -26,7 +26,7 @@ def extract_topics_from_pdf(file_path):
     splits = text_splitter.split_documents(docs)
 
     # 3. Setup LLM
-    llm = ChatAnthropic(model="claude-3-sonnet-20240229", temperature=0)
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 
     # 4. Create prompt
     parser = JsonOutputParser(pydantic_object=TopicList)

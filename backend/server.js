@@ -16,10 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require('./routes/auth.routes');
 const subjectRoutes = require('./routes/subject.routes');
 const topicRoutes = require('./routes/topic.routes');
+const scheduleRoutes = require('./routes/schedule.routes');
+const statsRoutes = require('./routes/stats.routes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/topics', topicRoutes);
+app.use('/api/schedule', scheduleRoutes);
+app.use('/api/stats', statsRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

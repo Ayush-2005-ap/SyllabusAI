@@ -51,7 +51,7 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
 
   const uploadSyllabus = useCallback(async (subjectId: string, uri: string, name: string, type: string) => {
     const formData = new FormData();
-    formData.append('pdf', {
+    formData.append('syllabus', {
       uri,
       name,
       type

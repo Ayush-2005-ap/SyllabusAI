@@ -11,7 +11,8 @@ const flaskApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'X-Node-Secret': SECRET
-  }
+  },
+  timeout: 60000 // 60 seconds
 });
 
 /**
@@ -21,7 +22,7 @@ exports.extractTopics = async (subjectId, pdfData) => {
   try {
     const response = await flaskApi.post('/extract-topics', {
       subjectId,
-      pdfData // This might need to be multipart if we forward files directly
+      filePath: pdfData.filePath
     });
     return response.data;
   } catch (error) {

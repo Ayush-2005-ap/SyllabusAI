@@ -1,27 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColors } from '../../src/hooks/useColors';
+import { useSchedule } from '../../src/hooks/useSchedule';
 import { Ionicons } from '@expo/vector-icons';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const MOCK_BLOCKS = [
-  { id: '1', subject: 'Advanced Thermodynamics', topic: 'Entropy & Second Law',        time: '09:00 AM — 10:30 AM', type: 'study'    },
-  { id: '2', subject: 'Neurobiology Foundations', topic: 'Synaptic Plasticity & Memory', time: '11:00 AM — 12:30 PM', type: 'revision' },
-  { id: '3', subject: 'Organic Chemistry Lab',    topic: 'Synthesis of Salicylic Acid', time: '02:00 PM — 03:30 PM', type: 'study'    },
-];
-
 export default function ScheduleScreen() {
-  const [selectedDay, setSelectedDay] = useState('Thu');
+  const [selectedDay, setSelectedDay] = useState(DAYS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1]);
   const [showConfidence, setShowConfidence] = useState(false);
+  const [activeBlock, setActiveBlock] = useState<string | null>(null);
+  
+  const { scheduleBlocks, fetchSchedule, generateSchedule, updateBlock, loading } = useSchedule();
   const c = useColors();
+
+  useEffect(() => {
+    fetchSchedule();
+  }, [fetchSchedule]);
+
+  const handleGenerate = async () => {
+    try {
+      await generateSchedule();
+    } catch (err: any) {
+      const msg = err.response?.data?.message || 'Please ensure you have added subjects and extracted topics first.';
+      Alert.alert('Scheduling Error', msg);
+    }
+  };
+
+  const handleComplete = (id: string) => {
+    setActiveBlock(id);
+    setShowConfidence(true);
+  };
+
+  const submitRating = async (rating: number) => {
+    if (activeBlock) {
+      await updateBlock(activeBlock, { isCompleted: true, confidenceRating: rating });
+      setShowConfidence(false);
+      setActiveBlock(null);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
       <View style={styles.header}>
-        <Text style={[styles.semester, { color: c.primary }]}>AUTUMN TERM • WEEK 8</Text>
-        <Text style={[styles.title, { color: c.onSurface }]}>Schedule</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View>
+            <Text style={[styles.semester, { color: c.primary }]}>AUTUMN TERM • WEEK 8</Text>
+            <Text style={[styles.title, { color: c.onSurface }]}>Schedule</Text>
+          </View>
+          {scheduleBlocks.length === 0 && (
+            <TouchableOpacity 
+              style={[styles.generateBtn, { backgroundColor: c.primaryContainer }]} 
+              onPress={handleGenerate}
+              disabled={loading}
+            >
+              <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>Auto-Generate</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
 
       {/* Week strip */}
@@ -37,30 +74,54 @@ export default function ScheduleScreen() {
         ))}
       </View>
 
+      {/* Loading state */}
+      {loading && <ActivityIndicator style={{ marginTop: 20 }} color={c.primary} />}
+
       {/* Blocks */}
       <FlatList
-        data={MOCK_BLOCKS}
-        keyExtractor={item => item.id}
+        data={scheduleBlocks}
+        keyExtractor={item => item._id}
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 100 }}
         renderItem={({ item }) => {
           const accent = item.type === 'revision' ? c.tertiary : c.primary;
+          const startTime = new Date(item.startTime);
+          const endTime = new Date(item.endTime);
+          const timeRange = `${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} — ${endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+          
           return (
-            <View style={[styles.blockCard, { backgroundColor: c.surfaceContainerHigh + '50', borderColor: c.outlineVariant + '20' }]}>
+            <View style={[styles.blockCard, { backgroundColor: c.surfaceContainerHigh + '50', borderColor: c.outlineVariant + '20' }, item.isCompleted && { opacity: 0.6 }]}>
               <View style={[styles.blockAccent, { backgroundColor: accent }]} />
               <View style={styles.blockContent}>
                 <View style={styles.blockMeta}>
-                  <Text style={[styles.blockSubject, { color: accent }]}>{item.subject}</Text>
-                  <Text style={[styles.blockTime, { color: c.onSurface + '50' }]}>{item.time}</Text>
+                  <Text style={[styles.blockSubject, { color: accent }]}>{item.subjectId?.name || 'Subject'}</Text>
+                  <Text style={[styles.blockTime, { color: c.onSurface + '50' }]}>{timeRange}</Text>
                 </View>
-                <Text style={[styles.blockTopic, { color: c.onSurface }]}>{item.topic}</Text>
+                <Text style={[styles.blockTopic, { color: c.onSurface, textDecorationLine: item.isCompleted ? 'line-through' : 'none' }]}>{item.title}</Text>
               </View>
               <TouchableOpacity style={[styles.completeBtn, { borderLeftColor: c.outlineVariant + '20' }]}
-                onPress={() => setShowConfidence(true)}>
-                <Ionicons name="checkmark-circle-outline" size={30} color={c.outlineVariant} />
+                disabled={item.isCompleted}
+                onPress={() => handleComplete(item._id)}>
+                <Ionicons 
+                  name={item.isCompleted ? "checkmark-circle" : "checkmark-circle-outline"} 
+                  size={30} 
+                  color={item.isCompleted ? c.success : c.outlineVariant} 
+                />
               </TouchableOpacity>
             </View>
           );
         }}
+        ListEmptyComponent={!loading ? (
+          <View style={{ alignItems: 'center', marginTop: 100 }}>
+            <Ionicons name="calendar-outline" size={64} color={c.onSurface + '20'} />
+            <Text style={{ color: c.onSurface + '50', marginTop: 16 }}>No sessions found.</Text>
+            <TouchableOpacity 
+              style={[styles.bigGenerateBtn, { backgroundColor: c.primary, marginTop: 24 }]} 
+              onPress={handleGenerate}
+            >
+              <Text style={{ color: '#fff', fontWeight: '800' }}>Generate Smart Schedule</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       />
 
       {/* Confidence modal */}
@@ -76,7 +137,7 @@ export default function ScheduleScreen() {
                 <TouchableOpacity
                   key={n}
                   style={[styles.ratingBtn, { backgroundColor: c.surfaceContainerHigh, borderColor: c.outlineVariant + '40' }]}
-                  onPress={() => setShowConfidence(false)}
+                  onPress={() => submitRating(n)}
                 >
                   <Text style={[styles.ratingNum, { color: c.onSurface }]}>{n}</Text>
                 </TouchableOpacity>
@@ -111,6 +172,8 @@ const styles = StyleSheet.create({
   blockTime: { fontSize: 10, fontWeight: '600' },
   blockTopic: { fontSize: 17, fontWeight: '700' },
   completeBtn: { padding: 18, borderLeftWidth: 1 },
+  generateBtn: { paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12 },
+  bigGenerateBtn: { paddingHorizontal: 32, paddingVertical: 18, borderRadius: 16 },
   modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end', zIndex: 100 },
   modal: { borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 32, paddingBottom: 48 },
   modalTitle: { fontSize: 22, fontWeight: '900', textAlign: 'center', marginBottom: 8 },

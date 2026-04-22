@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import { AuthProvider } from '../src/context/AuthContext';
 import { SubjectProvider } from '../src/context/SubjectContext';
+import { ScheduleProvider } from '../src/context/ScheduleContext';
 import { AppProvider } from '../src/context/AppContext';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 
@@ -34,9 +35,11 @@ export default function RootLayout() {
       <ThemeProvider>
         <AppProvider>
           <SubjectProvider>
-            <AuthProvider>
-              <ThemedRoot />
-            </AuthProvider>
+            <ScheduleProvider>
+              <AuthProvider>
+                <ThemedRoot />
+              </AuthProvider>
+            </ScheduleProvider>
           </SubjectProvider>
         </AppProvider>
       </ThemeProvider>

@@ -6,15 +6,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../src/hooks/useAuth';
 import { useSubjects } from '../../src/hooks/useSubjects';
+import { useSchedule } from '../../src/hooks/useSchedule';
 import { useColors } from '../../src/hooks/useColors';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-
-const HEAT_DATA = [0.1, 0.3, 0.6, 0.1, 0.1, 0.4, 0.1, 0.9, 0.1, 0.3, 0.1, 0.6, 0.1, 0.1,
-  0.4, 0.1, 0.1, 0.1, 0.1, 0.6, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.6,
-  0.1, 0.1, 0.4, 0.1, 0.9, 0.1, 0.3, 0.1, 0.6, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1, 0.1, 0.6, 0.1];
 
 const getHour = () => {
   const h = new Date().getHours();
@@ -26,12 +23,22 @@ const getHour = () => {
 export default function HomeScreen() {
   const { user } = useAuth();
   const { subjects, fetchSubjects } = useSubjects();
+  const { stats, fetchStats, scheduleBlocks, fetchSchedule } = useSchedule();
   const c = useColors();
   const router = useRouter();
 
-  useEffect(() => { fetchSubjects(); }, [fetchSubjects]);
+  useEffect(() => { 
+    fetchSubjects(); 
+    fetchStats();
+    fetchSchedule();
+  }, [fetchSubjects, fetchStats, fetchSchedule]);
 
   const firstName = user?.name?.split(' ')[0] || 'Student';
+
+  // Format heatmap data from stats
+  const heatmapArray = stats?.heatmap ? Object.values(stats.heatmap) : [];
+  // If empty, use some base values or just show zeros
+  const displayHeatmap = heatmapArray.length > 0 ? heatmapArray : Array(48).fill(0.1); 
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
@@ -110,26 +117,31 @@ export default function HomeScreen() {
         {/* ── Today's Plan ── */}
         <View style={styles.section}>
           <Text style={[styles.sectionLabel, { color: c.onSurface + '60' }]}>TODAY'S PLAN</Text>
-          {[
-            { icon: 'book', iconBg: c.primary + '18', iconColor: c.primary, tag: 'Thermodynamics', tagBg: c.primary + '25', tagColor: c.primary, time: '09:00 — 10:30 AM', topic: 'Entropy & Second Law', btnLabel: 'Start', btnBg: c.primary, btnColor: c.onPrimary },
-            { icon: 'code-slash', iconBg: c.tertiary + '18', iconColor: c.tertiary, tag: 'Neural Networks', tagBg: c.tertiary + '25', tagColor: c.tertiary, time: '1:00 — 3:00 PM', topic: 'Backpropagation Theory', btnLabel: 'Queue', btnBg: 'rgba(128,128,128,0.12)', btnColor: c.onSurface + '80' },
-          ].map((item, i) => (
-            <View key={i} style={[styles.planCard, { backgroundColor: c.surfaceContainerHigh + '60' }]}>
-              <View style={[styles.planIconWrap, { backgroundColor: item.iconBg }]}>
-                <Ionicons name={item.icon as any} size={22} color={item.iconColor} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <View style={styles.planMeta}>
-                  <Text style={[styles.planSubjectTag, { backgroundColor: item.tagBg, color: item.tagColor }]}>{item.tag}</Text>
-                  <Text style={[styles.planTime, { color: c.onSurface + '50' }]}>{item.time}</Text>
+          {scheduleBlocks.length > 0 ? scheduleBlocks.slice(0, 3).map((block, i) => {
+            const startTime = new Date(block.startTime);
+            const timeStr = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return (
+              <View key={block._id} style={[styles.planCard, { backgroundColor: c.surfaceContainerHigh + '60' }]}>
+                <View style={[styles.planIconWrap, { backgroundColor: c.primary + '18' }]}>
+                  <Ionicons name="book" size={22} color={c.primary} />
                 </View>
-                <Text style={[styles.planTopic, { color: c.onSurface }]}>{item.topic}</Text>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.planMeta}>
+                    <Text style={[styles.planSubjectTag, { backgroundColor: c.primary + '25', color: c.primary }]}>{block.subjectId?.name || 'Subject'}</Text>
+                    <Text style={[styles.planTime, { color: c.onSurface + '50' }]}>{timeStr}</Text>
+                  </View>
+                  <Text style={[styles.planTopic, { color: c.onSurface }]}>{block.title}</Text>
+                </View>
+                <TouchableOpacity style={[styles.startBtn, { backgroundColor: block.isCompleted ? c.success : c.primary }]} onPress={() => router.push('/schedule')}>
+                  <Text style={[styles.startBtnText, { color: '#fff' }]}>{block.isCompleted ? 'Done' : 'View'}</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={[styles.startBtn, { backgroundColor: item.btnBg }]}>
-                <Text style={[styles.startBtnText, { color: item.btnColor }]}>{item.btnLabel}</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+            );
+          }) : (
+            <TouchableOpacity style={[styles.planCard, { backgroundColor: c.surfaceContainerHigh + '60', justifyContent: 'center' }]} onPress={() => router.push('/schedule')}>
+              <Text style={{ color: c.onSurface + '50', textAlign: 'center' }}>No tasks scheduled. Tap to generate.</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* ── Streak + Heatmap bento ── */}
@@ -141,7 +153,7 @@ export default function HomeScreen() {
               </View>
               <Text style={styles.streakLabel}>MOMENTUM</Text>
             </View>
-            <Text style={styles.streakValue}>7 Day</Text>
+            <Text style={styles.streakValue}>{stats?.streak || 0} Day</Text>
             <Text style={styles.streakSub}>Study streak maintained. Keep it up!</Text>
           </View>
 
@@ -151,8 +163,8 @@ export default function HomeScreen() {
               <Text style={[styles.heatmapPeriod, { color: c.onSurface + '40' }]}>Past 3 Months</Text>
             </View>
             <View style={styles.heatmapGrid}>
-              {HEAT_DATA.map((intensity, i) => (
-                <View key={i} style={[styles.heatCell, { backgroundColor: c.primary, opacity: intensity }]} />
+              {displayHeatmap.slice(0, 48).map((intensity, i) => (
+                <View key={i} style={[styles.heatCell, { backgroundColor: c.primary, opacity: Math.max(0.1, Math.min(intensity, 1)) }]} />
               ))}
             </View>
             <View style={styles.heatLegend}>

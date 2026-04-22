@@ -1,9 +1,8 @@
 flask
 flask-cors
 flask-sse
-anthropic
+langchain-openai
 langchain
-langchain-anthropic
 langchain-community
 chromadb
 pymupdf

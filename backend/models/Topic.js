@@ -23,6 +23,10 @@ const topicSchema = new mongoose.Schema({
     enum: ['High', 'Medium', 'Low'],
     default: 'Low',
   },
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
   subjectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Subject',

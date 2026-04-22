@@ -1,22 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../../src/utils/colors';
 import { useSubjects } from '../../../src/hooks/useSubjects';
 import { Badge } from '../../../src/components/common/Badge';
+import * as DocumentPicker from 'expo-document-picker';
+import { Alert } from 'react-native';
 
 const TABS = ['Topics', 'PYQ Analysis', 'Schedule', 'Quiz'];
 
 export default function SubjectDetailScreen() {
   const { id } = useLocalSearchParams();
-  const { subjects, fetchTopics, topics } = useSubjects();
+  const { subjects, fetchTopics, topics, uploadSyllabus } = useSubjects();
   const [activeTab, setActiveTab] = useState('Topics');
+  const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
 
   const subject = subjects.find(s => s._id === id);
   const subjectTopics = topics[id as string] || [];
+
+  const handleUploadSyllabus = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/pdf',
+        copyToCacheDirectory: true,
+      });
+
+      if (result.canceled || !result.assets || result.assets.length === 0) return;
+
+      const file = result.assets[0];
+      setIsUploading(true);
+      
+      await uploadSyllabus(
+        id as string,
+        file.uri,
+        file.name,
+        file.mimeType || 'application/pdf'
+      );
+      
+      Alert.alert('Success', 'Syllabus uploaded and topics extracted successfully!');
+      fetchTopics(id as string);
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      Alert.alert('Upload Failed', err.response?.data?.message || 'Failed to process syllabus. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleUploadPYQ = () => {
+    Alert.alert('Coming Soon', 'PYQ analysis features are being developed!');
+  };
 
   useEffect(() => {
     if (id) fetchTopics(id as string);
@@ -54,8 +90,16 @@ export default function SubjectDetailScreen() {
               <View style={styles.emptyState}>
                 <Ionicons name="document-text-outline" size={48} color={colors.textSecondary} />
                 <Text style={styles.emptyText}>No topics extracted yet</Text>
-                <TouchableOpacity style={styles.uploadBtn}>
-                  <Text style={styles.uploadBtnText}>Upload Syllabus PDF</Text>
+                <TouchableOpacity 
+                  style={[styles.uploadBtn, isUploading && { opacity: 0.7 }]} 
+                  onPress={handleUploadSyllabus}
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <ActivityIndicator color="#fff" size="small" />
+                  ) : (
+                    <Text style={styles.uploadBtnText}>Upload Syllabus PDF</Text>
+                  )}
                 </TouchableOpacity>
               </View>
             )}
@@ -67,7 +111,7 @@ export default function SubjectDetailScreen() {
             <View style={styles.analysisCard}>
               <Text style={styles.analysisTitle}>Frequency vs Probability</Text>
               <Text style={styles.analysisDesc}>Upload past year questions to see which topics are most likely to appear in your exam.</Text>
-              <TouchableOpacity style={styles.uploadBtn}>
+              <TouchableOpacity style={styles.uploadBtn} onPress={handleUploadPYQ}>
                 <Ionicons name="cloud-upload-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
                 <Text style={styles.uploadBtnText}>Upload PYQ Papers</Text>
               </TouchableOpacity>

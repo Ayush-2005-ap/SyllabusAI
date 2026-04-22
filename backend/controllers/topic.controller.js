@@ -25,12 +25,16 @@ exports.extractTopics = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please upload a syllabus PDF' });
     }
 
+    const path = require('path');
+    const absolutePath = path.resolve(req.file.path);
+
+    console.log('--- Calling Flask AI ---');
     // Call Flask AI service via bridge
-    // Note: In a real implementation, we might forward the file path or buffer
     const aiResponse = await flaskBridge.extractTopics(req.params.subjectId, {
       fileName: req.file.filename,
-      filePath: req.file.path
+      filePath: absolutePath
     });
+    console.log('--- AI Response Received ---');
 
     if (!aiResponse || !aiResponse.topics) {
       throw new Error('AI service failed to return topics');

@@ -1,13 +1,13 @@
 import os
 import chromadb
 from langchain_community.vectorstores import Chroma
-from langchain_anthropic import AnthropicEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 class VectorStoreManager:
     def __init__(self):
         self.persist_directory = os.getenv('CHROMA_PERSIST_PATH', './chroma_db')
         self.client = chromadb.PersistentClient(path=self.persist_directory)
-        self.embeddings = AnthropicEmbeddings(model="claude-sonnet-4-20250514")
+        self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
     def get_collection_name(self, user_id, subject_id, type="syllabus"):
         return f"{user_id}_{subject_id}_{type}"
