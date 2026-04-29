@@ -7,6 +7,7 @@ export interface Topic {
   difficulty: DifficultyLevel;
   estimatedHours: number;
   pyqProbability?: 'High' | 'Medium' | 'Low';
+  isCompleted: boolean;
   subjectId: string;
 }
 
@@ -22,4 +23,5 @@ export interface Subject {
   userId: string;
   completedTopics?: number;
   totalTopics?: number;
+  progress?: number;
 }

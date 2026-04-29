@@ -36,9 +36,17 @@ export default function HomeScreen() {
   const firstName = user?.name?.split(' ')[0] || 'Student';
 
   // Format heatmap data from stats
-  const heatmapArray = stats?.heatmap ? Object.values(stats.heatmap) : [];
-  // If empty, use some base values or just show zeros
-  const displayHeatmap = heatmapArray.length > 0 ? heatmapArray : Array(48).fill(0.1); 
+  const displayHeatmap = [];
+  for (let i = 47; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+    const count = stats?.heatmap?.[dateStr] || 0;
+    // Map count to opacity (0 => 0.1, 1 => 0.4, 2 => 0.7, 3+ => 1.0)
+    let opacity = 0.1;
+    if (count > 0) opacity = Math.min(0.2 + (count * 0.25), 1.0);
+    displayHeatmap.push(opacity);
+  } 
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>

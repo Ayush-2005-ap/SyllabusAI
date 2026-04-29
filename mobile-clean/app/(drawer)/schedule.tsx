@@ -49,15 +49,15 @@ export default function ScheduleScreen() {
             <Text style={[styles.semester, { color: c.primary }]}>AUTUMN TERM • WEEK 8</Text>
             <Text style={[styles.title, { color: c.onSurface }]}>Schedule</Text>
           </View>
-          {scheduleBlocks.length === 0 && (
-            <TouchableOpacity 
-              style={[styles.generateBtn, { backgroundColor: c.primaryContainer }]} 
-              onPress={handleGenerate}
-              disabled={loading}
-            >
-              <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>Auto-Generate</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity 
+            style={[styles.generateBtn, { backgroundColor: c.primaryContainer }]} 
+            onPress={handleGenerate}
+            disabled={loading}
+          >
+            <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>
+              {scheduleBlocks.length === 0 ? 'Auto-Generate' : 'Update Plan'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -79,7 +79,13 @@ export default function ScheduleScreen() {
 
       {/* Blocks */}
       <FlatList
-        data={scheduleBlocks}
+        data={scheduleBlocks.filter(item => {
+          if (!item.startTime) return false;
+          const d = new Date(item.startTime);
+          const dayIndex = d.getDay();
+          const dayName = dayIndex === 0 ? 'Sun' : DAYS[dayIndex - 1];
+          return dayName === selectedDay;
+        })}
         keyExtractor={item => item._id}
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 100 }}
         renderItem={({ item }) => {

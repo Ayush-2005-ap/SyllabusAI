@@ -1,28 +1,104 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColors } from '../../src/hooks/useColors';
 import { Ionicons } from '@expo/vector-icons';
+import api from '../../src/services/api';
+import { useSubjects } from '../../src/hooks/useSubjects';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MOCK_MESSAGES = [
-  { id: '1', role: 'ai',   content: "Welcome back! I've analyzed your recent notes on Schrödinger's Equation. Ready to run a quick diagnostic quiz or should we dive into the derivations?" },
-  { id: '2', role: 'user', content: "Let's try the diagnostic quiz first. I'm feeling a bit shaky on the probability density interpretations." },
-  { id: '3', role: 'ai',   content: "Perfect. Question 1 of 5:\n\nWhat does the square of the absolute value of the wavefunction |ψ(x,t)|² represent?" },
-];
-
-const QUIZ_OPTIONS = [
-  { id: 'a', text: 'Wave-Particle Duality', correct: false },
-  { id: 'b', text: 'Probability Density',   correct: true  },
-  { id: 'c', text: 'Quantum Superposition', correct: false },
-  { id: 'd', text: 'Energy Eigenvalue',     correct: false },
-];
+interface Message {
+  id: string;
+  role: 'ai' | 'user';
+  content: string;
+}
 
 export default function ChatScreen() {
   const c = useColors();
+  const { subjects } = useSubjects();
   const [input, setInput] = useState('');
   const [showSettings, setShowSettings] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [showQuiz, setShowQuiz] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [personality, setPersonality] = useState('Friendly');
+  const flatListRef = useRef<FlatList>(null);
+
+  const [messages, setMessages] = useState<Message[]>([
+    { id: '1', role: 'ai', content: "Hello! I am your AI Guru. I have analyzed your syllabus documents. What would you like to learn today?" }
+  ]);
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const saved = await AsyncStorage.getItem('@guru_chat_history');
+        if (saved) {
+          setMessages(JSON.parse(saved));
+        }
+      } catch (e) {
+        console.error('Failed to load chat history', e);
+      }
+    };
+    loadMessages();
+  }, []);
+
+  const saveMessages = async (newMessages: Message[]) => {
+    try {
+      await AsyncStorage.setItem('@guru_chat_history', JSON.stringify(newMessages));
+    } catch (e) {
+      console.error('Failed to save chat history', e);
+    }
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
+
+    if (subjects.length === 0) {
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'ai', content: "Please add a subject and upload a syllabus first before we can chat!" }]);
+      setInput('');
+      return;
+    }
+
+    const subjectId = subjects[0]._id; // Currently defaults to the first subject
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input };
+    
+    const updatedWithUser = [...messages, userMsg];
+    setMessages(updatedWithUser);
+    saveMessages(updatedWithUser);
+    setInput('');
+    setLoading(true);
+
+    try {
+      // Map history excluding the initial welcome message
+      const history = messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content }));
+      
+      const res = await api.post('/chat', {
+        subjectId,
+        message: userMsg.content,
+        history,
+        personality
+      });
+
+      const aiMsg: Message = { id: (Date.now() + 1).toString(), role: 'ai', content: res.data.data || res.data.response || "No response received." };
+      const updatedWithAi = [...updatedWithUser, aiMsg];
+      setMessages(updatedWithAi);
+      saveMessages(updatedWithAi);
+    } catch (err: any) {
+      console.error('Chat API Error:', err.response?.data || err.message);
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'ai', content: "Oops, something went wrong connecting to the Guru. Please ensure the backend is running." }]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 200);
+    }
+  };
+
+  const handlePersonalityChange = (newPersonality: string) => {
+    setPersonality(newPersonality);
+    setShowSettings(false);
+    
+    const msg: Message = { id: Date.now().toString(), role: 'ai', content: `Switched personality to ${newPersonality} mode!` };
+    const updated = [...messages, msg];
+    setMessages(updated);
+    saveMessages(updated);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
@@ -34,7 +110,7 @@ export default function ChatScreen() {
           </View>
           <View>
             <Text style={[styles.aiTitle, { color: c.primary }]}>AI GURU</Text>
-            <Text style={[styles.aiStatus, { color: c.success }]}>Socratic Mode · Online</Text>
+            <Text style={[styles.aiStatus, { color: c.success }]}>{personality} Mode · Online</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.settingsBtn} onPress={() => setShowSettings(!showSettings)}>
@@ -44,9 +120,11 @@ export default function ChatScreen() {
 
       {/* Messages */}
       <FlatList
-        data={MOCK_MESSAGES}
+        ref={flatListRef}
+        data={messages}
         keyExtractor={item => item.id}
-        contentContainerStyle={{ padding: 16, paddingBottom: 8 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 20 }}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         renderItem={({ item }) => (
           <View style={[
             styles.bubble,
@@ -59,29 +137,9 @@ export default function ChatScreen() {
             </Text>
           </View>
         )}
-        ListFooterComponent={showQuiz ? (
-          <View style={[styles.quizCard, { backgroundColor: c.surfaceContainerHigh, borderColor: c.outlineVariant + '25' }]}>
-            <Text style={[styles.quizQ, { color: c.onSurface + '70' }]}>Select the correct answer:</Text>
-            {QUIZ_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt.id}
-                style={[
-                  styles.quizOption,
-                  { backgroundColor: c.surfaceContainerHighest },
-                  selectedOption === opt.id && (opt.correct
-                    ? { backgroundColor: c.success + 'bb' }
-                    : { backgroundColor: c.error + 'bb' }),
-                ]}
-                onPress={() => setSelectedOption(opt.id)}
-              >
-                <Text style={[styles.quizOptionText, { color: selectedOption === opt.id ? '#fff' : c.onSurface }]}>
-                  {opt.text}
-                </Text>
-                {selectedOption === opt.id && (
-                  <Ionicons name={opt.correct ? 'checkmark-circle' : 'close-circle'} size={20} color="#fff" />
-                )}
-              </TouchableOpacity>
-            ))}
+        ListFooterComponent={loading ? (
+          <View style={[styles.bubble, styles.aiBubble, { backgroundColor: c.surfaceContainerHigh, borderColor: c.outlineVariant + '30', alignSelf: 'flex-start', paddingVertical: 18, width: 80, alignItems: 'center' }]}>
+            <ActivityIndicator size="small" color={c.primary} />
           </View>
         ) : null}
       />
@@ -91,16 +149,16 @@ export default function ChatScreen() {
         <View style={[styles.settingsPanel, { backgroundColor: c.surfaceContainer }]}>
           <View style={styles.settingsHeader}>
             <Ionicons name="book" size={18} color={c.primary} />
-            <Text style={[styles.settingsTitleText, { color: c.primary }]}>The Digital Dean</Text>
+            <Text style={[styles.settingsTitleText, { color: c.primary }]}>Guru Settings</Text>
             <TouchableOpacity onPress={() => setShowSettings(false)} style={{ marginLeft: 'auto' }}>
               <Ionicons name="close" size={22} color={c.onSurface + '80'} />
             </TouchableOpacity>
           </View>
-          <Text style={[styles.settingsSubtitle, { color: c.onSurface + '50' }]}>Fall 2024</Text>
-          {['Guru Personality', 'Difficulty Level', 'Academic Settings', 'Panic Mode Settings'].map(item => (
-            <TouchableOpacity key={item} style={[styles.settingsItem, { borderBottomColor: c.outlineVariant + '25' }]}>
-              <Text style={[styles.settingsItemText, { color: c.onSurface }]}>{item}</Text>
-              <Ionicons name="chevron-forward" size={16} color={c.onSurface + '50'} />
+          <Text style={[styles.settingsSubtitle, { color: c.onSurface + '50' }]}>Select Personality</Text>
+          {['Friendly', 'Strict', 'Socratic', 'Panic'].map(item => (
+            <TouchableOpacity key={item} onPress={() => handlePersonalityChange(item)} style={[styles.settingsItem, { borderBottomColor: c.outlineVariant + '25' }]}>
+              <Text style={[styles.settingsItemText, { color: personality === item ? c.primary : c.onSurface }]}>{item} Mode</Text>
+              {personality === item && <Ionicons name="checkmark" size={16} color={c.primary} />}
             </TouchableOpacity>
           ))}
         </View>
@@ -109,12 +167,6 @@ export default function ChatScreen() {
       {/* Input bar */}
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={90}>
         <View style={[styles.inputBar, { borderTopColor: c.outlineVariant + '25', backgroundColor: c.background }]}>
-          <TouchableOpacity
-            onPress={() => setShowQuiz(!showQuiz)}
-            style={[styles.quizMeBtn, { borderColor: c.primaryContainer + '60' }]}
-          >
-            <Text style={[styles.quizMeBtnText, { color: c.primary }]}>Quiz Me</Text>
-          </TouchableOpacity>
           <TextInput
             style={[styles.input, { color: c.onSurface, backgroundColor: c.surfaceContainerHighest + '80', borderColor: c.outlineVariant + '30' }]}
             placeholder="Ask your Guru anything..."
@@ -124,15 +176,15 @@ export default function ChatScreen() {
             multiline
           />
           <TouchableOpacity
-            style={[styles.sendBtn, { backgroundColor: c.primaryContainer }, !input.trim() && { opacity: 0.4 }]}
-            disabled={!input.trim()}
+            style={[styles.sendBtn, { backgroundColor: c.primaryContainer }, (!input.trim() || loading) && { opacity: 0.4 }]}
+            disabled={!input.trim() || loading}
+            onPress={handleSend}
           >
             <Ionicons name="send" size={18} color={c.onPrimary} />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-
-      <View style={{ height: 80 }} />
+      <View style={{ height: 85 }} />
     </SafeAreaView>
   );
 }
@@ -147,11 +199,7 @@ const styles = StyleSheet.create({
   bubble: { padding: 14, borderRadius: 20, marginBottom: 10, maxWidth: '88%' },
   aiBubble: { alignSelf: 'flex-start', borderBottomLeftRadius: 4, borderWidth: 1 },
   userBubble: { alignSelf: 'flex-end', borderBottomRightRadius: 4 },
-  bubbleText: { fontSize: 14, lineHeight: 20 },
-  quizCard: { borderRadius: 20, padding: 16, marginBottom: 12, borderWidth: 1 },
-  quizQ: { fontSize: 12, fontWeight: '700', marginBottom: 12, letterSpacing: 0.5 },
-  quizOption: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderRadius: 14, padding: 14, marginBottom: 8 },
-  quizOptionText: { fontSize: 14, fontWeight: '500' },
+  bubbleText: { fontSize: 14, lineHeight: 22 },
   settingsPanel: { position: 'absolute', bottom: 0, right: 0, width: 280, borderTopLeftRadius: 28, paddingTop: 24, paddingHorizontal: 24, paddingBottom: 32, zIndex: 50, shadowColor: '#000', shadowOffset: { width: -4, height: 0 }, shadowOpacity: 0.2, shadowRadius: 16 },
   settingsHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 4 },
   settingsTitleText: { fontSize: 16, fontWeight: '900', marginLeft: 8 },
@@ -159,8 +207,6 @@ const styles = StyleSheet.create({
   settingsItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14, borderBottomWidth: 1 },
   settingsItemText: { fontSize: 14, fontWeight: '500' },
   inputBar: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: 14, paddingVertical: 10, borderTopWidth: 1 },
-  quizMeBtn: { paddingHorizontal: 14, paddingVertical: 10, borderRadius: 9999, borderWidth: 1, marginRight: 8 },
-  quizMeBtnText: { fontSize: 12, fontWeight: '700' },
   input: { flex: 1, borderRadius: 20, paddingHorizontal: 16, paddingVertical: 10, maxHeight: 100, fontSize: 14, borderWidth: 1 },
   sendBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginLeft: 8 },
 });

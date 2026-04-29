@@ -1,36 +1,37 @@
-// ─── Dark Mode (Stitch Design) ───────────────────────────────
+// ─── Dark Mode (Purple / Violet Accent) ──────────────────────
 export const darkColors = {
-  background:             '#0e1322',
-  surface:                '#0e1322',
-  surfaceContainerLowest: '#090e1c',
-  surfaceContainerLow:    '#161b2b',
-  surfaceContainer:       '#1a1f2f',
-  surfaceContainerHigh:   '#25293a',
-  surfaceContainerHighest:'#2f3445',
-  primary:                '#a0caff',
-  primaryContainer:       '#4f94dd',
-  onPrimary:              '#003259',
-  onPrimaryContainer:     '#002b4e',
-  onSurface:              '#dee1f7',
-  onBackground:           '#dee1f7',
-  onSurfaceVariant:       '#c1c7d2',
-  tertiary:               '#ffb955',
-  tertiaryContainer:      '#c68200',
+  background:             '#0d0d14',
+  surface:                '#0d0d14',
+  surfaceContainerLowest: '#080810',
+  surfaceContainerLow:    '#13131e',
+  surfaceContainer:       '#18182a',
+  surfaceContainerHigh:   '#1f1f33',
+  surfaceContainerHighest:'#28283f',
+  primary:                '#c4a8ff',   // Vivid violet
+  primaryContainer:       '#7c4dff',   // Deep purple CTA
+  onPrimary:              '#1a0050',
+  onPrimaryContainer:     '#ede0ff',
+  onSurface:              '#e8e0f5',
+  onBackground:           '#e8e0f5',
+  onSurfaceVariant:       '#c3b9d4',
+  tertiary:               '#ffb07a',   // Warm coral accent
+  tertiaryContainer:      '#b85c00',
   error:                  '#ffb4ab',
   errorContainer:         '#93000a',
-  secondary:              '#b1c8e9',
-  secondaryContainer:     '#314864',
-  outline:                '#8b919c',
-  outlineVariant:         '#414751',
+  secondary:              '#cdbfea',
+  secondaryContainer:     '#3d2f6b',
+  outline:                '#8a7fa0',
+  outlineVariant:         '#3d3852',
   // legacy aliases
-  cardBackground:         'rgba(22,27,43,0.7)',
-  cardBorder:             'rgba(255,255,255,0.07)',
-  textPrimary:            '#dee1f7',
-  textSecondary:          '#c1c7d2',
-  success:                '#4ade80',
-  warning:                '#ffb955',
-  danger:                 '#ffb4ab',
+  cardBackground:         'rgba(25,20,45,0.80)',
+  cardBorder:             'rgba(196,168,255,0.10)',
+  textPrimary:            '#e8e0f5',
+  textSecondary:          '#c3b9d4',
+  success:                '#57e89c',
+  warning:                '#ffb07a',
+  danger:                 '#ff7c7c',
 };
+
 
 // ─── Light Mode ──────────────────────────────────────────────
 export const lightColors = {

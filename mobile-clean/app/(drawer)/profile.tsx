@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch
+  View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -133,7 +133,10 @@ export default function ProfileScreen() {
         {/* ── Academic Engine ── */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>ACADEMIC ENGINE</Text>
-          <View style={[styles.infoCard, { backgroundColor: c.surfaceContainerLow, borderColor: c.outlineVariant + '30' }]}>
+          <TouchableOpacity 
+            style={[styles.infoCard, { backgroundColor: c.surfaceContainerLow, borderColor: c.outlineVariant + '30' }]}
+            onPress={() => router.push('/(drawer)/ai-personality')}
+          >
             <View style={styles.infoCardHeader}>
               <Ionicons name="sparkles" size={18} color={c.primary} />
               <Text style={[styles.infoCardTitle, { color: c.onSurface }]}>AI Personality Profile</Text>
@@ -143,7 +146,7 @@ export default function ProfileScreen() {
               <Text style={{ color: c.primary, fontWeight: '700' }}>Socratic Method</Text>
               . It will ask guiding questions to improve long-term retention.
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         {/* ── System Settings ── */}
@@ -151,11 +154,15 @@ export default function ProfileScreen() {
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>SYSTEM</Text>
 
           {[
-            { icon: 'settings-outline', label: 'Academic Settings' },
-            { icon: 'notifications-outline', label: 'Notification Preferences' },
-            { icon: 'archive-outline', label: 'Archive' },
+            { icon: 'settings-outline', label: 'Academic Settings', route: '/(drawer)/academic-settings' },
+            { icon: 'notifications-outline', label: 'Notification Preferences', route: '/(drawer)/notification-prefs' },
+            { icon: 'archive-outline', label: 'Archive', route: '/(drawer)/archive' },
           ].map(item => (
-            <TouchableOpacity key={item.label} style={[styles.menuItem, { borderBottomColor: c.outlineVariant + '25' }]}>
+            <TouchableOpacity 
+              key={item.label} 
+              style={[styles.menuItem, { borderBottomColor: c.outlineVariant + '25' }]}
+              onPress={() => router.push(item.route as any)}
+            >
               <View style={styles.menuLeft}>
                 <Ionicons name={item.icon as any} size={20} color={c.onSurface} />
                 <Text style={[styles.menuText, { color: c.onSurface }]}>{item.label}</Text>
@@ -168,7 +175,10 @@ export default function ProfileScreen() {
         {/* ── Danger Zone ── */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>DANGER ZONE</Text>
-          <View style={[styles.dangerCard, { backgroundColor: c.errorContainer + '20', borderColor: c.error + '25' }]}>
+          <TouchableOpacity 
+            style={[styles.dangerCard, { backgroundColor: c.errorContainer + '20', borderColor: c.error + '25' }]}
+            onPress={() => router.push('/(drawer)/panic-mode')}
+          >
             <View style={styles.dangerCardTop}>
               <Ionicons name="flash" size={18} color={c.error} />
               <Text style={[styles.dangerTitle, { color: c.error }]}>Panic Mode Settings</Text>
@@ -176,7 +186,7 @@ export default function ProfileScreen() {
             <Text style={[styles.dangerDesc, { color: c.onSurface + '70' }]}>
               Configure how the app reacts when you fall behind 20%+ of your semester goals.
             </Text>
-          </View>
+          </TouchableOpacity>
 
           <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
             <Ionicons name="log-out-outline" size={20} color={c.error} />

@@ -18,12 +18,16 @@ const subjectRoutes = require('./routes/subject.routes');
 const topicRoutes = require('./routes/topic.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
 const statsRoutes = require('./routes/stats.routes');
+const chatRoutes = require('./routes/chat.routes');
+const quizRoutes = require('./routes/quiz.routes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/topics', topicRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/quiz', quizRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

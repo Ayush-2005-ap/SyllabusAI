@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Tabs, usePathname } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../../src/utils/colors';
-
+import { useColors } from '../../src/hooks/useColors';
 const TAB_ITEMS = [
   { name: 'home',     label: 'Home',     icon: 'home',         iconActive: 'home' },
   { name: 'subjects', label: 'Subjects', icon: 'library-outline',iconActive: 'library' },
@@ -13,13 +12,18 @@ const TAB_ITEMS = [
 ];
 
 export default function TabLayout() {
+  const colors = useColors();
+  
   return (
     <Tabs
       screenOptions={{
         headerStyle: { backgroundColor: colors.background + 'CC' },
         headerTintColor: colors.onSurface,
         headerTitleStyle: { fontWeight: '800', fontSize: 18 },
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: [styles.tabBar, { 
+          backgroundColor: colors.background + 'E6',
+          shadowColor: colors.primary 
+        }],
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.onSurface + '55',
         tabBarLabelStyle: styles.tabLabel,
@@ -90,13 +94,19 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
+      <Tabs.Screen name="ai-personality" options={{ href: null, headerShown: false }} />
+      <Tabs.Screen name="academic-settings" options={{ href: null, headerShown: false }} />
+      <Tabs.Screen name="notification-prefs" options={{ href: null, headerShown: false }} />
+      <Tabs.Screen name="archive" options={{ href: null, headerShown: false }} />
+      <Tabs.Screen name="panic-mode" options={{ href: null, headerShown: false }} />
     </Tabs>
   );
 }
 
 function TabIcon({ focused, iconName, color }: { focused: boolean; iconName: any; color: string }) {
+  const colors = useColors();
   return (
-    <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+    <View style={[styles.iconWrap, focused && { backgroundColor: colors.primaryContainer + '30' }]}>
       <Ionicons name={iconName} size={22} color={color} />
     </View>
   );
@@ -104,7 +114,6 @@ function TabIcon({ focused, iconName, color }: { focused: boolean; iconName: any
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.background + 'E6',
     borderTopWidth: 0,
     position: 'absolute',
     bottom: 0,
@@ -115,7 +124,6 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
-    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.06,
     shadowRadius: 20,
@@ -134,8 +142,5 @@ const styles = StyleSheet.create({
   iconWrap: {
     padding: 6,
     borderRadius: 20,
-  },
-  iconWrapActive: {
-    backgroundColor: colors.primaryContainer + '30',
   },
 });

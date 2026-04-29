@@ -1,7 +1,8 @@
 import os
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from pydantic import BaseModel, Field
@@ -16,33 +17,46 @@ class Topic(BaseModel):
 class TopicList(BaseModel):
     topics: List[Topic]
 
-def extract_topics_from_pdf(file_path):
+def extract_topics_from_pdf(file_path, user_id, subject_id):
     # 1. Load PDF
     loader = PyMuPDFLoader(file_path)
     docs = loader.load()
 
-    # 2. Split content for context
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+    # 2. Split content for context and vector store
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     splits = text_splitter.split_documents(docs)
 
-    # 3. Setup LLM
+    # 3. Store in ChromaDB
+    persist_directory = os.getenv('CHROMA_PERSIST_PATH', './chroma_db')
+    collection_name = f"syllabus_{user_id}_{subject_id}"
+    
+    embeddings = OpenAIEmbeddings()
+    vectorstore = Chroma.from_documents(
+        documents=splits,
+        embedding=embeddings,
+        persist_directory=persist_directory,
+        collection_name=collection_name
+    )
+
+    # 4. Setup LLM for extraction
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 
-    # 4. Create prompt
+    # 5. Create prompt for extraction
     parser = JsonOutputParser(pydantic_object=TopicList)
     
     prompt = ChatPromptTemplate.from_template(
         "Extract a structured list of study topics from the following syllabus content.\n"
         "Each topic should have a name, description, difficulty (Easy/Medium/Hard), and estimatedHours.\n"
+        "Focus on the main modules and sub-topics.\n"
         "Content: {content}\n"
         "{format_instructions}"
     )
 
-    # 5. Chain and Invoke
+    # 6. Chain and Invoke
     chain = prompt | llm | parser
     
-    # We take the first few chunks or combine them if small
-    combined_content = "\n".join([doc.page_content for doc in docs[:10]]) 
+    # Use most relevant content for topic extraction (first 15 chunks)
+    combined_content = "\n".join([doc.page_content for doc in splits[:15]]) 
     
     result = chain.invoke({
         "content": combined_content,

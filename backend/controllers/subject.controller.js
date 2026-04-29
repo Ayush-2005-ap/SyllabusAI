@@ -5,9 +5,25 @@ const Subject = require('../models/Subject');
 // @access  Private
 exports.getSubjects = async (req, res) => {
   try {
-    const subjects = await Subject.find({ userId: req.user.id });
-    res.status(200).json({ success: true, count: subjects.length, data: subjects });
+    const subjects = await Subject.find({ userId: req.user.id }).lean();
+    
+    // Add topic stats to each subject
+    const subjectsWithStats = await Promise.all(subjects.map(async (subject) => {
+      const Topic = require('../models/Topic');
+      const totalTopics = await Topic.countDocuments({ subjectId: subject._id });
+      const completedTopics = await Topic.countDocuments({ subjectId: subject._id, isCompleted: true });
+      
+      return {
+        ...subject,
+        totalTopics,
+        completedTopics,
+        progress: totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0
+      };
+    }));
+
+    res.status(200).json({ success: true, count: subjectsWithStats.length, data: subjectsWithStats });
   } catch (error) {
+    console.error('Error in getSubjects:', error);
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
@@ -17,7 +33,7 @@ exports.getSubjects = async (req, res) => {
 // @access  Private
 exports.getSubject = async (req, res) => {
   try {
-    const subject = await Subject.findById(req.params.id);
+    const subject = await Subject.findById(req.params.id).lean();
 
     if (!subject) {
       return res.status(404).json({ success: false, message: 'Subject not found' });
@@ -28,7 +44,19 @@ exports.getSubject = async (req, res) => {
       return res.status(401).json({ success: false, message: 'Not authorized' });
     }
 
-    res.status(200).json({ success: true, data: subject });
+    // Add topic stats
+    const Topic = require('../models/Topic');
+    const totalTopics = await Topic.countDocuments({ subjectId: subject._id });
+    const completedTopics = await Topic.countDocuments({ subjectId: subject._id, isCompleted: true });
+
+    const data = {
+      ...subject,
+      totalTopics,
+      completedTopics,
+      progress: totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0
+    };
+
+    res.status(200).json({ success: true, data });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server Error' });
   }

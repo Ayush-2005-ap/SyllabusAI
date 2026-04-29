@@ -24,49 +24,54 @@ exports.getSchedule = async (req, res) => {
 exports.generateSchedule = async (req, res) => {
   try {
     const userId = req.user.id;
+    const flaskBridge = require('../services/flaskBridge');
     
-    // 1. Fetch all user topics that are not completed
-    const topics = await Topic.find({ userId });
+    // 1. Fetch user topics and subjects (for exam date)
+    const topics = await Topic.find({ userId, isCompleted: false });
+    const subjects = await Subject.find({ userId });
     
     if (topics.length === 0) {
-      return res.status(400).json({ success: false, message: 'No topics found to schedule. Please add subjects and extract topics first.' });
+      return res.status(400).json({ success: false, message: 'No pending topics found to schedule. Add subjects first.' });
     }
 
-    // 2. Rule-based sorting (Priority = Difficulty + Probability)
-    // Difficulty: Hard=3, Medium=2, Easy=1
-    // Probability: High=3, Medium=2, Low=1 (Mocked for now if not present)
-    const sortedTopics = topics.sort((a, b) => {
-      const aWeight = (a.difficulty === 'Hard' ? 3 : a.difficulty === 'Medium' ? 2 : 1) + (a.pyqProbability === 'High' ? 3 : 2);
-      const bWeight = (b.difficulty === 'Hard' ? 3 : b.difficulty === 'Medium' ? 2 : 1) + (b.pyqProbability === 'High' ? 3 : 2);
-      return bWeight - aWeight;
-    });
+    // 2. Find closest exam date
+    const validExamDates = subjects.filter(s => s.examDate).map(s => s.examDate);
+    const closestExamDate = validExamDates.length > 0 
+      ? new Date(Math.min(...validExamDates.map(d => new Date(d).getTime()))).toISOString()
+      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now default
 
-    // 3. Create blocks (Simplified: 1.5h blocks starting from tomorrow)
-    const blocks = [];
-    let currentTime = new Date();
-    currentTime.setDate(currentTime.getDate() + 1); // Start tomorrow
-    currentTime.setHours(9, 0, 0, 0); // Start at 9 AM
+    console.log('--- Calling AI Scheduler ---');
+    const aiSchedule = await flaskBridge.generateAISchedule(
+      topics.map(t => ({ 
+        id: t._id, 
+        name: t.name, 
+        difficulty: t.difficulty, 
+        pyqProbability: t.pyqProbability,
+        estimatedHours: t.estimatedHours 
+      })),
+      closestExamDate,
+      req.body?.dailyHours || 4
+    );
+    console.log('--- AI Schedule Received ---');
 
-    for (const topic of sortedTopics) {
-      const block = {
-        subjectId: topic.subjectId,
-        topicId: topic._id,
-        title: topic.name,
-        type: 'study',
-        startTime: new Date(currentTime),
-        endTime: new Date(currentTime.getTime() + 90 * 60000), // +90 mins
+    // 3. Map AI blocks to MongoDB Schedule models
+    const blocks = aiSchedule.blocks.map(block => {
+      const topic = topics.find(t => t.name === block.topicName);
+      const startTime = new Date(block.date);
+      startTime.setHours(9, 0, 0, 0); // Logic could be more sophisticated but keeping it simple for now
+      
+      const endTime = new Date(startTime.getTime() + (block.duration || 2) * 3600000);
+
+      return {
+        subjectId: topic ? topic.subjectId : null,
+        topicId: topic ? topic._id : null,
+        title: block.topicName,
+        type: block.type.toLowerCase(),
+        startTime,
+        endTime,
         isCompleted: false
       };
-      blocks.push(block);
-      
-      // Move to next slot (e.g., 2 hours later)
-      currentTime.setTime(currentTime.getTime() + 120 * 60000);
-      
-      if (currentTime.getHours() > 20) { // Limit to 8 PM
-        currentTime.setDate(currentTime.getDate() + 1);
-        currentTime.setHours(9, 0, 0, 0);
-      }
-    }
+    });
 
     // 4. Save/Update Schedule
     let schedule = await Schedule.findOne({ userId });
@@ -79,8 +84,8 @@ exports.generateSchedule = async (req, res) => {
 
     res.status(201).json({ success: true, data: schedule });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('Schedule Generation Error:', error.message);
+    res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 };
 
@@ -103,6 +108,20 @@ exports.updateBlock = async (req, res) => {
 
     if (isCompleted !== undefined) block.isCompleted = isCompleted;
     if (confidenceRating !== undefined) block.confidenceRating = confidenceRating;
+
+    // Adaptive Rescheduling: If confidence is low (1-2), add a revision block
+    if (confidenceRating && confidenceRating <= 2) {
+      const revisionBlock = {
+        subjectId: block.subjectId,
+        topicId: block.topicId,
+        title: `Revision: ${block.title}`,
+        type: 'revision',
+        startTime: new Date(block.startTime.getTime() + 2 * 24 * 60 * 60 * 1000), // +2 days
+        endTime: new Date(block.startTime.getTime() + 2 * 24 * 60 * 60 * 1000 + 45 * 60000), // +45 mins
+        isCompleted: false
+      };
+      schedule.blocks.push(revisionBlock);
+    }
 
     await schedule.save();
     res.status(200).json({ success: true, data: schedule });

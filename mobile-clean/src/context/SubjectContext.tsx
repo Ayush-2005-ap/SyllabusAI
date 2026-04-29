@@ -9,9 +9,11 @@ interface SubjectContextProps {
   loading: boolean;
   fetchSubjects: () => Promise<void>;
   addSubject: (data: Partial<Subject>) => Promise<void>;
+  updateSubject: (id: string, data: Partial<Subject>) => Promise<void>;
   deleteSubject: (id: string) => Promise<void>;
   uploadSyllabus: (subjectId: string, uri: string, name: string, type: string) => Promise<void>;
   fetchTopics: (subjectId: string) => Promise<void>;
+  updateTopic: (id: string, data: Partial<Topic>) => Promise<void>;
 }
 
 export const SubjectContext = createContext<SubjectContextProps | undefined>(undefined);
@@ -40,6 +42,12 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
   const addSubject = useCallback(async (data: Partial<Subject>) => {
     const res = await api.post('/subjects', data);
     setSubjects(prev => [...prev, res.data.data || res.data]);
+    fetchSubjects();
+  }, [fetchSubjects]);
+
+  const updateSubject = useCallback(async (id: string, data: Partial<Subject>) => {
+    const res = await api.put(`/subjects/${id}`, data);
+    setSubjects(prev => prev.map(s => s._id === id ? { ...s, ...(res.data.data || res.data) } : s));
     fetchSubjects();
   }, [fetchSubjects]);
 
@@ -81,8 +89,33 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  const updateTopic = useCallback(async (id: string, data: Partial<Topic>) => {
+    const res = await api.put(`/topics/${id}`, data);
+    const updatedTopic = res.data.data || res.data;
+    const subjectId = updatedTopic.subjectId;
+    
+    setTopics(prev => ({
+      ...prev,
+      [subjectId]: prev[subjectId]?.map(t => t._id === id ? updatedTopic : t) || []
+    }));
+    
+    // Refresh subjects to update progress statistics
+    fetchSubjects();
+  }, [fetchSubjects]);
+
   return (
-    <SubjectContext.Provider value={{ subjects, topics, loading, fetchSubjects, addSubject, deleteSubject, uploadSyllabus, fetchTopics }}>
+    <SubjectContext.Provider value={{ 
+      subjects, 
+      topics, 
+      loading, 
+      fetchSubjects, 
+      addSubject, 
+      updateSubject,
+      deleteSubject, 
+      uploadSyllabus, 
+      fetchTopics,
+      updateTopic
+    }}>
       {children}
     </SubjectContext.Provider>
   );

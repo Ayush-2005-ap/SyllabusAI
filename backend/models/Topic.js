@@ -27,6 +27,10 @@ const topicSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  completedAt: {
+    type: Date,
+    default: null,
+  },
   subjectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Subject',
