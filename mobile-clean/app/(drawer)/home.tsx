@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView,
   TouchableOpacity, Dimensions
@@ -9,7 +9,7 @@ import { useSubjects } from '../../src/hooks/useSubjects';
 import { useSchedule } from '../../src/hooks/useSchedule';
 import { useColors } from '../../src/hooks/useColors';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -27,11 +27,13 @@ export default function HomeScreen() {
   const c = useColors();
   const router = useRouter();
 
-  useEffect(() => { 
-    fetchSubjects(); 
-    fetchStats();
-    fetchSchedule();
-  }, [fetchSubjects, fetchStats, fetchSchedule]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchSubjects(); 
+      fetchStats();
+      fetchSchedule();
+    }, [fetchSubjects, fetchStats, fetchSchedule])
+  );
 
   const firstName = user?.name?.split(' ')[0] || 'Student';
 

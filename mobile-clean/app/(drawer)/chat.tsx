@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import {
+  View, Text, StyleSheet, FlatList, TextInput,
+  TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useColors } from '../../src/hooks/useColors';
 import { Ionicons } from '@expo/vector-icons';
-import api from '../../src/services/api';
-import { useSubjects } from '../../src/hooks/useSubjects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useColors } from '../../src/hooks/useColors';
+import { useSubjects } from '../../src/hooks/useSubjects';
+import { useAppContext } from '../../src/hooks/useAppContext';
+import api from '../../src/services/api';
 
 interface Message {
   id: string;
@@ -16,12 +20,14 @@ interface Message {
 export default function ChatScreen() {
   const c = useColors();
   const { subjects } = useSubjects();
+  const { settings, panicMode } = useAppContext();
   const [input, setInput] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [personality, setPersonality] = useState('Friendly');
+  
+  const personality = panicMode ? 'Panic' : (settings.personality.charAt(0).toUpperCase() + settings.personality.slice(1));
   const flatListRef = useRef<FlatList>(null);
-
+  
   const [messages, setMessages] = useState<Message[]>([
     { id: '1', role: 'ai', content: "Hello! I am your AI Guru. I have analyzed your syllabus documents. What would you like to learn today?" }
   ]);
@@ -57,9 +63,7 @@ export default function ChatScreen() {
       return;
     }
 
-    const subjectId = subjects[0]._id; // Currently defaults to the first subject
     const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input };
-    
     const updatedWithUser = [...messages, userMsg];
     setMessages(updatedWithUser);
     saveMessages(updatedWithUser);
@@ -67,146 +71,162 @@ export default function ChatScreen() {
     setLoading(true);
 
     try {
-      // Map history excluding the initial welcome message
+      const subjectId = subjects[0]._id; // Default to first subject
       const history = messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content }));
       
       const res = await api.post('/chat', {
         subjectId,
         message: userMsg.content,
+        personality,
         history,
-        personality
       });
 
-      const aiMsg: Message = { id: (Date.now() + 1).toString(), role: 'ai', content: res.data.data || res.data.response || "No response received." };
+      const aiMsg: Message = { 
+        id: (Date.now() + 1).toString(), 
+        role: 'ai', 
+        content: res.data.data || res.data.response || "No response received." 
+      };
       const updatedWithAi = [...updatedWithUser, aiMsg];
       setMessages(updatedWithAi);
       saveMessages(updatedWithAi);
+      
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 200);
     } catch (err: any) {
       console.error('Chat API Error:', err.response?.data || err.message);
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'ai', content: "Oops, something went wrong connecting to the Guru. Please ensure the backend is running." }]);
     } finally {
       setLoading(false);
-      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 200);
     }
   };
 
-  const handlePersonalityChange = (newPersonality: string) => {
-    setPersonality(newPersonality);
-    setShowSettings(false);
-    
-    const msg: Message = { id: Date.now().toString(), role: 'ai', content: `Switched personality to ${newPersonality} mode!` };
-    const updated = [...messages, msg];
-    setMessages(updated);
-    saveMessages(updated);
-  };
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: c.background }} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: c.background }]} edges={['top']}>
       {/* Header */}
-      <View style={[styles.header, { borderBottomColor: c.outlineVariant + '25' }]}>
+      <View style={[styles.header, { borderBottomColor: c.outlineVariant + '20' }]}>
         <View style={styles.aiInfo}>
           <View style={[styles.aiAvatar, { backgroundColor: c.primaryContainer }]}>
-            <Ionicons name="sparkles" size={18} color="#fff" />
+            <Ionicons name="sparkles" size={20} color="#fff" />
           </View>
           <View>
             <Text style={[styles.aiTitle, { color: c.primary }]}>AI GURU</Text>
-            <Text style={[styles.aiStatus, { color: c.success }]}>{personality} Mode · Online</Text>
+            <Text style={[styles.aiStatus, { color: c.onSurface + '60' }]}>
+              {loading ? 'Thinking...' : `${personality} Mode`}
+            </Text>
           </View>
         </View>
         <TouchableOpacity style={styles.settingsBtn} onPress={() => setShowSettings(!showSettings)}>
-          <Ionicons name="options-outline" size={24} color={c.onSurface + '80'} />
+          <Ionicons name="options-outline" size={24} color={c.onSurface} />
         </TouchableOpacity>
       </View>
 
-      {/* Messages */}
+      {/* Messages List */}
       <FlatList
         ref={flatListRef}
-        data={messages}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{ padding: 16, paddingBottom: 20 }}
-        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        data={loading ? [...messages, { id: 'loading', role: 'ai', content: '...' }] : messages}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.messageList}
         renderItem={({ item }) => (
           <View style={[
             styles.bubble,
-            item.role === 'user'
-              ? [styles.userBubble, { backgroundColor: c.primaryContainer }]
-              : [styles.aiBubble, { backgroundColor: c.surfaceContainerHigh, borderColor: c.outlineVariant + '30' }]
+            item.role === 'user' 
+              ? [styles.userBubble, { backgroundColor: c.primaryContainer }] 
+              : [styles.aiBubble, { backgroundColor: c.surfaceContainerLow, borderColor: c.outlineVariant + '20' }]
           ]}>
-            <Text style={[styles.bubbleText, { color: item.role === 'user' ? '#fff' : c.onSurface }]}>
-              {item.content}
-            </Text>
+            {item.id === 'loading' ? (
+              <ActivityIndicator size="small" color={c.primary} style={{ padding: 4 }} />
+            ) : (
+              <Text style={[
+                styles.bubbleText, 
+                { color: item.role === 'user' ? '#fff' : c.onSurface }
+              ]}>
+                {item.content}
+              </Text>
+            )}
           </View>
         )}
-        ListFooterComponent={loading ? (
-          <View style={[styles.bubble, styles.aiBubble, { backgroundColor: c.surfaceContainerHigh, borderColor: c.outlineVariant + '30', alignSelf: 'flex-start', paddingVertical: 18, width: 80, alignItems: 'center' }]}>
-            <ActivityIndicator size="small" color={c.primary} />
-          </View>
-        ) : null}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
       />
 
-      {/* Settings panel */}
-      {showSettings && (
-        <View style={[styles.settingsPanel, { backgroundColor: c.surfaceContainer }]}>
-          <View style={styles.settingsHeader}>
-            <Ionicons name="book" size={18} color={c.primary} />
-            <Text style={[styles.settingsTitleText, { color: c.primary }]}>Guru Settings</Text>
-            <TouchableOpacity onPress={() => setShowSettings(false)} style={{ marginLeft: 'auto' }}>
-              <Ionicons name="close" size={22} color={c.onSurface + '80'} />
-            </TouchableOpacity>
-          </View>
-          <Text style={[styles.settingsSubtitle, { color: c.onSurface + '50' }]}>Select Personality</Text>
-          {['Friendly', 'Strict', 'Socratic', 'Panic'].map(item => (
-            <TouchableOpacity key={item} onPress={() => handlePersonalityChange(item)} style={[styles.settingsItem, { borderBottomColor: c.outlineVariant + '25' }]}>
-              <Text style={[styles.settingsItemText, { color: personality === item ? c.primary : c.onSurface }]}>{item} Mode</Text>
-              {personality === item && <Ionicons name="checkmark" size={16} color={c.primary} />}
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-
-      {/* Input bar */}
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={90}>
-        <View style={[styles.inputBar, { borderTopColor: c.outlineVariant + '25', backgroundColor: c.background }]}>
+      {/* Input Area */}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={90}>
+        <View style={[styles.inputBar, { backgroundColor: c.background, borderTopColor: c.outlineVariant + '20' }]}>
           <TextInput
-            style={[styles.input, { color: c.onSurface, backgroundColor: c.surfaceContainerHighest + '80', borderColor: c.outlineVariant + '30' }]}
+            style={[styles.input, { color: c.onSurface, backgroundColor: c.surfaceContainerHighest + '50', borderColor: c.outlineVariant + '20' }]}
             placeholder="Ask your Guru anything..."
             placeholderTextColor={c.onSurface + '40'}
             value={input}
             onChangeText={setInput}
-            multiline
+            multiline={false}
+            onSubmitEditing={handleSend}
+            returnKeyType="send"
           />
-          <TouchableOpacity
-            style={[styles.sendBtn, { backgroundColor: c.primaryContainer }, (!input.trim() || loading) && { opacity: 0.4 }]}
-            disabled={!input.trim() || loading}
+          <TouchableOpacity 
             onPress={handleSend}
+            disabled={!input.trim() || loading}
+            style={[styles.sendBtn, { backgroundColor: c.primaryContainer }, (!input.trim() || loading) && { opacity: 0.4 }]}
           >
-            <Ionicons name="send" size={18} color={c.onPrimary} />
+            {loading ? <ActivityIndicator size="small" color="#fff" /> : <Ionicons name="send" size={18} color="#fff" />}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-      <View style={{ height: 85 }} />
+
+      {/* Settings Overlay */}
+      {showSettings && (
+        <View style={[styles.settingsPanel, { backgroundColor: c.surfaceContainerHigh }]}>
+          <View style={styles.settingsHeader}>
+            <Text style={[styles.settingsTitle, { color: c.onSurface }]}>Guru Personality</Text>
+          </View>
+          <TouchableOpacity 
+            style={styles.settingItem} 
+            onPress={() => { setShowSettings(false); router.push('/settings/ai-personality'); }}
+          >
+            <Text style={[styles.settingItemText, { color: c.onSurface }]}>Change Personality</Text>
+            <Ionicons name="chevron-forward" size={18} color={c.onSurface + '40'} />
+          </TouchableOpacity>
+
+          <View style={[styles.divider, { backgroundColor: c.outlineVariant + '30' }]} />
+          
+          <TouchableOpacity style={styles.settingLink} onPress={() => { setShowSettings(false); router.push('/settings/academic-settings'); }}>
+            <Ionicons name="settings-outline" size={16} color={c.onSurface + '80'} />
+            <Text style={[styles.settingLinkText, { color: c.onSurface + '80' }]}>Academic Settings</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.settingLink} onPress={() => { setShowSettings(false); router.push('/settings/notification-prefs'); }}>
+            <Ionicons name="notifications-outline" size={16} color={c.onSurface + '80'} />
+            <Text style={[styles.settingLinkText, { color: c.onSurface + '80' }]}>Notifications</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.settingLink} onPress={() => { setShowSettings(false); router.push('/settings/panic-mode'); }}>
+            <Ionicons name="flash-outline" size={16} color={c.error} />
+            <Text style={[styles.settingLinkText, { color: c.error }]}>Panic Mode</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 14, borderBottomWidth: 1 },
   aiInfo: { flexDirection: 'row', alignItems: 'center' },
   aiAvatar: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
   aiTitle: { fontSize: 11, fontWeight: '900', letterSpacing: 2 },
   aiStatus: { fontSize: 12, marginTop: 1 },
   settingsBtn: { padding: 8 },
-  bubble: { padding: 14, borderRadius: 20, marginBottom: 10, maxWidth: '88%' },
-  aiBubble: { alignSelf: 'flex-start', borderBottomLeftRadius: 4, borderWidth: 1 },
+  messageList: { padding: 20, paddingBottom: 30 },
+  bubble: { padding: 14, borderRadius: 20, marginBottom: 10, maxWidth: '85%' },
   userBubble: { alignSelf: 'flex-end', borderBottomRightRadius: 4 },
+  aiBubble: { alignSelf: 'flex-start', borderBottomLeftRadius: 4, borderWidth: 1 },
   bubbleText: { fontSize: 14, lineHeight: 22 },
-  settingsPanel: { position: 'absolute', bottom: 0, right: 0, width: 280, borderTopLeftRadius: 28, paddingTop: 24, paddingHorizontal: 24, paddingBottom: 32, zIndex: 50, shadowColor: '#000', shadowOffset: { width: -4, height: 0 }, shadowOpacity: 0.2, shadowRadius: 16 },
-  settingsHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 4 },
-  settingsTitleText: { fontSize: 16, fontWeight: '900', marginLeft: 8 },
-  settingsSubtitle: { fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 },
-  settingsItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14, borderBottomWidth: 1 },
-  settingsItemText: { fontSize: 14, fontWeight: '500' },
-  inputBar: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: 14, paddingVertical: 10, borderTopWidth: 1 },
+  inputBar: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: 14, paddingVertical: 10, borderTopWidth: 1, marginBottom: 80 },
   input: { flex: 1, borderRadius: 20, paddingHorizontal: 16, paddingVertical: 10, maxHeight: 100, fontSize: 14, borderWidth: 1 },
   sendBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginLeft: 8 },
+  settingsPanel: { position: 'absolute', top: 70, right: 20, borderRadius: 16, padding: 16, width: 200, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.2, shadowRadius: 8, elevation: 5, zIndex: 10 },
+  settingsTitle: { fontSize: 12, fontWeight: '800', letterSpacing: 1, marginBottom: 12, textTransform: 'uppercase' },
+  settingItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10 },
+  settingItemText: { fontSize: 15, fontWeight: '500' },
+  divider: { height: 1, marginVertical: 12 },
+  settingLink: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10 },
+  settingLinkText: { fontSize: 13, fontWeight: '600', marginLeft: 10 },
 });

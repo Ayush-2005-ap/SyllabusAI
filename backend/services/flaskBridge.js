@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const FLASK_URL = process.env.FLASK_AI_URL || 'http://localhost:5001';
+const FLASK_URL = process.env.FLASK_AI_URL || 'http://localhost:8000';
 const SECRET = process.env.NODE_BACKEND_SECRET || 'your-shared-secret';
 
 const flaskApi = axios.create({

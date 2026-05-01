@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../src/hooks/useAuth';
 import { useTheme } from '../../src/context/ThemeContext';
+import { useSubjects } from '../../src/hooks/useSubjects';
+import { useSchedule } from '../../src/hooks/useSchedule';
 import { darkColors, lightColors } from '../../src/utils/colors';
-
-const STATS = [
-  { value: '142', label: 'Total Hours' },
-  { value: '6',   label: 'Subjects' },
-  { value: '24',  label: 'Quizzes' },
-  { value: '12',  label: 'Day Streak' },
-];
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
   const { isDark, setTheme, theme } = useTheme();
+  const { subjects, fetchSubjects } = useSubjects();
+  const { stats, fetchStats } = useSchedule();
   const router = useRouter();
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchSubjects();
+      fetchStats();
+    }, [fetchSubjects, fetchStats])
+  );
+
+  const totalHours = useMemo(() => {
+    return subjects.reduce((acc, s) => acc + (s.completedTopics || 0) * 1.5, 0).toFixed(0);
+  }, [subjects]);
+
+  const STATS = [
+    { value: totalHours, label: 'Study Hours' },
+    { value: subjects.length.toString(), label: 'Subjects' },
+    { value: '0', label: 'Quizzes' },
+    { value: (stats?.streak || 0).toString(), label: 'Day Streak' },
+  ];
 
   const c = isDark ? darkColors : lightColors;
 
@@ -34,7 +49,7 @@ export default function ProfileScreen() {
           <Text style={styles.pageTitle}>Profile</Text>
           <TouchableOpacity
             style={styles.editBtn}
-            onPress={() => router.push('/(drawer)/edit-profile')}
+            onPress={() => router.push('/settings/edit-profile')}
           >
             <Ionicons name="pencil" size={16} color={c.primary} />
             <Text style={styles.editBtnText}>Edit</Text>
@@ -45,7 +60,7 @@ export default function ProfileScreen() {
         <View style={styles.profileCard}>
           <TouchableOpacity
             style={styles.avatar}
-            onPress={() => router.push('/(drawer)/edit-profile')}
+            onPress={() => router.push('/settings/edit-profile')}
           >
             <Text style={styles.avatarText}>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</Text>
             <View style={styles.avatarEdit}>
@@ -135,7 +150,7 @@ export default function ProfileScreen() {
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>ACADEMIC ENGINE</Text>
           <TouchableOpacity 
             style={[styles.infoCard, { backgroundColor: c.surfaceContainerLow, borderColor: c.outlineVariant + '30' }]}
-            onPress={() => router.push('/(drawer)/ai-personality')}
+            onPress={() => router.push('/settings/ai-personality')}
           >
             <View style={styles.infoCardHeader}>
               <Ionicons name="sparkles" size={18} color={c.primary} />
@@ -154,9 +169,9 @@ export default function ProfileScreen() {
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>SYSTEM</Text>
 
           {[
-            { icon: 'settings-outline', label: 'Academic Settings', route: '/(drawer)/academic-settings' },
-            { icon: 'notifications-outline', label: 'Notification Preferences', route: '/(drawer)/notification-prefs' },
-            { icon: 'archive-outline', label: 'Archive', route: '/(drawer)/archive' },
+            { icon: 'settings-outline', label: 'Academic Settings', route: '/settings/academic-settings' },
+            { icon: 'notifications-outline', label: 'Notification Preferences', route: '/settings/notification-prefs' },
+            { icon: 'archive-outline', label: 'Archive', route: '/settings/archive' },
           ].map(item => (
             <TouchableOpacity 
               key={item.label} 
@@ -177,7 +192,7 @@ export default function ProfileScreen() {
           <Text style={[styles.sectionTitle, { color: c.onSurface + '55' }]}>DANGER ZONE</Text>
           <TouchableOpacity 
             style={[styles.dangerCard, { backgroundColor: c.errorContainer + '20', borderColor: c.error + '25' }]}
-            onPress={() => router.push('/(drawer)/panic-mode')}
+            onPress={() => router.push('/settings/panic-mode')}
           >
             <View style={styles.dangerCardTop}>
               <Ionicons name="flash" size={18} color={c.error} />

@@ -12,11 +12,14 @@ import api from '../../../src/services/api';
 import { Alert, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useAppContext } from '../../../src/hooks/useAppContext';
+
 const TABS = ['Topics', 'Chat', 'PYQ Analysis', 'Schedule', 'Quiz'];
 
 export default function SubjectDetailScreen() {
   const { id } = useLocalSearchParams();
   const colors = useColors();
+  const { settings, panicMode } = useAppContext();
   const styles = getStyles(colors);
   const { scheduleBlocks, fetchSchedule, updateBlock, generateSchedule, loading: scheduleLoading, fetchStats } = useSchedule();
   const { subjects, fetchTopics, topics, uploadSyllabus, updateTopic, fetchSubjects, deleteSubject } = useSubjects();
@@ -25,7 +28,8 @@ export default function SubjectDetailScreen() {
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState<any[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
-  const [chatPersonality, setChatPersonality] = useState('Friendly');
+  
+  const chatPersonality = panicMode ? 'Panic' : (settings.personality.charAt(0).toUpperCase() + settings.personality.slice(1));
   const [activeQuiz, setActiveQuiz] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isQuizLoading, setIsQuizLoading] = useState(false);
@@ -292,6 +296,12 @@ export default function SubjectDetailScreen() {
                       msg.role === 'user' ? styles.userBubble : styles.aiBubble
                     ]}
                   >
+                    {msg.role === 'ai' && (
+                      <View style={styles.aiBadge}>
+                        <Ionicons name="sparkles" size={12} color={colors.primary} />
+                        <Text style={styles.aiBadgeText}>Guru</Text>
+                      </View>
+                    )}
                     <Text style={[styles.chatText, msg.role === 'user' ? styles.userChatText : styles.aiChatText]}>
                       {msg.content}
                     </Text>
@@ -299,8 +309,11 @@ export default function SubjectDetailScreen() {
                 ))
               )}
               {isChatLoading && (
-                <View style={[styles.chatBubble, styles.aiBubble]}>
-                  <ActivityIndicator size="small" color={colors.primary} />
+                <View style={[styles.chatBubble, styles.aiBubble, { paddingVertical: 12 }]}>
+                   <View style={styles.typingIndicator}>
+                    <ActivityIndicator size="small" color={colors.primary} style={{ marginRight: 8 }} />
+                    <Text style={[styles.aiChatText, { fontStyle: 'italic', opacity: 0.7 }]}>Guru is thinking...</Text>
+                  </View>
                 </View>
               )}
             </ScrollView>
@@ -311,7 +324,10 @@ export default function SubjectDetailScreen() {
                 placeholderTextColor={colors.textSecondary}
                 value={chatInput}
                 onChangeText={setChatInput}
-                multiline
+                multiline={false} // Changed to single line for better Enter support
+                onSubmitEditing={handleSendMessage}
+                returnKeyType="send"
+                blurOnSubmit={false}
               />
               <TouchableOpacity 
                 style={[styles.chatSendBtn, !chatInput.trim() && { opacity: 0.5 }]} 
@@ -320,17 +336,6 @@ export default function SubjectDetailScreen() {
               >
                 <Ionicons name="send" size={20} color="#fff" />
               </TouchableOpacity>
-            </View>
-            <View style={styles.personalityContainer}>
-              {['Friendly', 'Strict', 'Socratic', 'Panic'].map(p => (
-                <TouchableOpacity 
-                  key={p} 
-                  onPress={() => setChatPersonality(p)}
-                  style={[styles.personalityBtn, chatPersonality === p && styles.activePersonality]}
-                >
-                  <Text style={[styles.personalityText, chatPersonality === p && styles.activePersonalityText]}>{p}</Text>
-                </TouchableOpacity>
-              ))}
             </View>
           </View>
         );
@@ -781,7 +786,9 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   chatInputContainer: {
     flexDirection: 'row',
-    padding: 16,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 2, // Significant reduction here
     borderTopWidth: 1,
     borderTopColor: colors.cardBorder,
     alignItems: 'center',
@@ -805,6 +812,28 @@ const getStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 10,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  aiBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+    opacity: 0.8,
+  },
+  aiBadgeText: {
+    color: colors.primary,
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginLeft: 4,
+    textTransform: 'uppercase',
+  },
+  typingIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   personalityContainer: {
     flexDirection: 'row',

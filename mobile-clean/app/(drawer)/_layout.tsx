@@ -85,20 +85,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="edit-profile"
-        options={{
-          title: 'Edit Profile',
-          tabBarLabel: 'Edit Profile',
-          href: null, // hidden from tab bar
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen name="ai-personality" options={{ href: null, headerShown: false }} />
-      <Tabs.Screen name="academic-settings" options={{ href: null, headerShown: false }} />
-      <Tabs.Screen name="notification-prefs" options={{ href: null, headerShown: false }} />
-      <Tabs.Screen name="archive" options={{ href: null, headerShown: false }} />
-      <Tabs.Screen name="panic-mode" options={{ href: null, headerShown: false }} />
+
     </Tabs>
   );
 }

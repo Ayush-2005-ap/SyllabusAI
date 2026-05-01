@@ -55,6 +55,7 @@ function ThemedRoot() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(auth)" />
         <Stack.Screen name="(drawer)" />
+        <Stack.Screen name="settings" />
       </Stack>
     </>
   );
