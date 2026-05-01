@@ -19,6 +19,9 @@ services:
       - shared-uploads:/app/uploads
     depends_on:
       - ai-service
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/syllabusai
 
   ai-service:
     build: ./ai-backend
