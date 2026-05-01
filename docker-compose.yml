@@ -1,6 +1,13 @@
 version: "3.9"
 
 services:
+
+  mongo:
+    image: mongo:6
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+
   backend:
     build: ./backend
     container_name: backend-container
