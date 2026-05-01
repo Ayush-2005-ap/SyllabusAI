@@ -22,6 +22,7 @@ services:
       - mongo
     environment:
       - MONGO_URI=mongodb://mongo:27017/syllabusai
+      - PORT=5050
 
   ai-service:
     build: ./ai-backend
