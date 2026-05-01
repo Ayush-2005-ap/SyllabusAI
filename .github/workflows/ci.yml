@@ -17,7 +17,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 3. Start all services
+      # 3. Create dummy .env files to satisfy Docker Compose
+      - name: Create dummy .env files
+        run: |
+          touch backend/.env
+          touch ai-backend/.env
+
+      # 4. Start all services
       # We provide environment variables directly since .env files are usually ignored
       - name: Start services
         run: docker compose up -d --build
