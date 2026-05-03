@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "SyllabusAI",
+    "slug": "SyllabusAI",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo_syllabusAi.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "scheme": "syllabusai",

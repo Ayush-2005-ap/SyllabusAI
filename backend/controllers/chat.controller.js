@@ -25,7 +25,10 @@ exports.sendMessage = async (req, res) => {
       data: aiResponse.response
     });
   } catch (error) {
-    console.error('Chat error:', error.message);
+    const errorMsg = error.response?.data?.error || error.message;
+    console.error('Chat error:', errorMsg);
     res.status(500).json({ success: false, message: 'Failed to get response from AI Guru' });
   }
 };
+
+

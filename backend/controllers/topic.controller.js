@@ -51,10 +51,12 @@ exports.extractTopics = async (req, res) => {
 
     res.status(200).json({ success: true, count: topics.length, data: topics });
   } catch (error) {
-    console.error('Extraction error:', error.message);
-    res.status(500).json({ success: false, message: error.message || 'Topic extraction failed' });
+    const errorMsg = error.response?.data?.error || error.message;
+    console.error('Extraction error:', errorMsg);
+    res.status(500).json({ success: false, message: errorMsg || 'Topic extraction failed' });
   }
 };
+
 
 // @desc    Update topic
 // @route   PUT /api/topics/:id
