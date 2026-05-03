@@ -1,44 +1,119 @@
-Awesome! Great progress today getting the full AI pipeline working. 
+# 🎓 SyllabusAI — AI-Powered Academic Assistant
 
-Here is a professionally structured, high-impact `README.md` for your GitHub repository. It covers the architecture, tech stack, and setup instructions.
+SyllabusAI is a full-stack, AI-driven mobile application that transforms unstructured syllabus PDFs into structured learning systems and enables intelligent, context-aware Q&A using Retrieval-Augmented Generation (RAG).
 
-***
-
-# 🎓 SyllabusAI: The Intelligent Academic Powerhouse
-
-**SyllabusAI** is a high-fidelity mobile application designed to transform messy syllabus PDFs into structured, actionable study plans. Using a multi-service architecture (Node.js, Python, and React Native), it leverages LLMs to automate subject management, topic extraction, and interactive learning.
+Built using a **microservices architecture**, it integrates React Native, Node.js, and Python AI services to deliver a scalable and production-ready academic assistant.
 
 ---
 
 ## 🚀 Key Features
 
-*   **📄 AI Syllabus Extraction**: Upload any PDF syllabus and let the Python/LangChain service automatically identify chapters, topics, difficulty levels, and estimated study hours.
-*   **📅 Smart Scheduling**: An automated scheduling engine that maps out your entire semester based on syllabus depth and exam dates.
-*   **🤖 AI Guru (Socratic Mode)**: A specialized chatbot that doesn't just give answers, but guides you through complex topics using Socratic questioning and diagnostic quizzes.
-*   **⚡ Panic Mode**: A high-intensity study plan generator for those "I have an exam tomorrow" moments.
-*   **🎨 Premium Glassmorphic UI**: A state-of-the-art dark theme built with React Native and Expo, featuring smooth micro-animations and a sleek "Stitch" design system.
+### 📄 AI-Powered Syllabus Extraction
+Upload a syllabus PDF → automatically extract:
+- Chapters & topics
+- Difficulty levels
+- Study weightage
+
+### 🤖 AI Guru (Context-Aware Chat)
+- Ask questions based on your syllabus
+- Uses **RAG (Retrieval-Augmented Generation)**
+- Context-aware, intelligent responses
+
+### 📚 Topic Management
+- Structured topic breakdown
+- Track progress and completion
+
+### 📅 Smart Study Planning *(Upcoming)*
+- Dynamic scheduling based on syllabus complexity
+- Deadline-aware planning
+
+### ⚡ Panic Mode *(Upcoming)*
+- Last-minute revision planner
+
+---
+
+## 🏗 Architecture (Microservices-Based)
+
+```text
+Mobile App (React Native / Expo)
+        ↓
+Node.js Backend (Express API)
+        ↓
+Python AI Service (Flask + LangChain)
+        ↓
+OpenAI API + Vector DB (ChromaDB)
+```
+
+---
+
+## 🔹 Service Responsibilities
+
+### 📱 Mobile (Client)
+- UI/UX
+- API communication
+- Authentication handling
+
+### ⚙️ Node.js Backend (Orchestrator)
+- JWT Authentication
+- Subject & topic management
+- File upload handling (Multer)
+- Connects mobile ↔ AI backend
+- Secure communication (shared secret)
+
+### 🧠 AI Backend (Flask)
+- PDF parsing (PyMuPDF)
+- Topic extraction
+- Embeddings generation
+- RAG-based chat responses
+- Vector storage (ChromaDB)
+
+---
+
+## 🔥 Key Engineering Highlights
+
+### ✅ Microservices Architecture
+- Decoupled Node & Python services
+- Independent deployment
+
+### ✅ Cross-Service File Handling (Critical Fix)
+
+**Initial issue:**
+- File paths shared between services ❌
+
+**Solution:**
+- Implemented **file streaming via multipart/form-data** ✅
+- Enabled cross-server compatibility
+
+### ✅ AI Pipeline (RAG)
+- OpenAI embeddings
+- Stored in ChromaDB
+- Context retrieval during chat
+
+### ✅ Secure Communication
+- JWT authentication
+- Shared secret between Node ↔ Flask
+
+### ✅ Production Deployment
+- Node Backend → Render
+- Flask AI → Render
+- Env-based configs
+- Debugged: API key issues, service communication failures, deployment bugs
+
+### ✅ Error Handling & Debugging
+- Improved error propagation
+- Added structured logs
+- Removed silent failures
 
 ---
 
 ## 🛠 Tech Stack
 
-### Frontend (Mobile)
-*   **Framework**: React Native with Expo (Router)
-*   **State Management**: Context API
-*   **Styling**: High-fidelity custom themes with Glassmorphism
-*   **Storage**: Expo SecureStore (Auth) & Async Storage
-
-### Backend (Orchestration)
-*   **Runtime**: Node.js & Express
-*   **Database**: MongoDB (Atlas)
-*   **Authentication**: JWT (JSON Web Tokens)
-*   **File Handling**: Multer for PDF uploads
-
-### AI Service (Brain)
-*   **Language**: Python 3.10+
-*   **Framework**: Flask
-*   **AI Engine**: LangChain & OpenAI (GPT-3.5/4o)
-*   **PDF Parsing**: PyMuPDF
+| Layer | Technology |
+|-------|-----------|
+| 📱 Frontend | React Native (Expo + Router), Context API, SecureStore & AsyncStorage |
+| ⚙️ Backend | Node.js + Express, MongoDB Atlas, JWT Authentication, Multer |
+| 🧠 AI Backend | Python (Flask), LangChain, OpenAI API, PyMuPDF, ChromaDB |
+| ☁️ Deployment | Render (Node + Flask), Environment variables, REST-based microservices |
 
 ---
 
@@ -46,57 +121,118 @@ Here is a professionally structured, high-impact `README.md` for your GitHub rep
 
 ```text
 SyllabusAI/
-├── mobile-clean/     # React Native / Expo Application
-├── backend/          # Node.js Express API (Orchestration & Database)
-└── ai-backend/       # Python Flask API (AI Topic Extraction)
+├── mobile-clean/     # React Native App
+├── backend/          # Node.js API
+└── ai-backend/       # Flask AI Service
 ```
 
 ---
 
 ## ⚙️ Setup Instructions
 
-### 1. Backend (Node.js)
+### 1️⃣ Node Backend
+
 ```bash
 cd backend
 npm install
-# Create a .env file with:
-# PORT=5050
-# MONGO_URI=your_mongodb_atlas_uri
-# JWT_SECRET=your_secret
-# FLASK_AI_URL=http://your_local_ip
+```
+
+Create `.env`:
+
+```env
+PORT=5050
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
+FLASK_AI_URL=http://localhost:8000
+NODE_BACKEND_SECRET=your_shared_secret
+```
+
+Run:
+
+```bash
 npm run dev
 ```
 
-### 2. AI Backend (Python)
+### 2️⃣ AI Backend
+
 ```bash
 cd ai-backend
 pip install -r requirements.txt
-# Create a .env file with:
-# OPENAI_API_KEY=your_key
-# NODE_BACKEND_SECRET=your_shared_secret
+```
+
+Create `.env`:
+
+```env
+OPENAI_API_KEY=your_openai_key
+NODE_BACKEND_SECRET=your_shared_secret
+```
+
+Run:
+
+```bash
 python app.py
 ```
 
-### 3. Mobile (Expo)
+### 3️⃣ Mobile App
+
 ```bash
 cd mobile-clean
 npm install
-# Update src/services/api.ts with your machine's IP address
 npx expo start
+```
+
+Update API base URL in:
+
+```text
+src/services/api.ts
 ```
 
 ---
 
-## 📸 Preview
-*(Insert your screenshots here! User the ones you just took of the Dashboard and extracted topics)*
+## 📸 Screenshots
+
+*(Add your app screenshots here)*
+
+---
+
+## ⚠️ Known Limitations
+
+- Render free tier → cold start delay (~30–50 sec)
+- ChromaDB resets on redeploy (ephemeral storage)
+
+---
+
+## 🚀 Future Improvements
+
+- Persistent vector DB
+- Web dashboard
+- Offline support
+- Multi-subject AI memory
+- Analytics
+
+---
+
+## 🧠 Learnings
+
+- Microservice architecture design
+- Cross-service file handling
+- Production AI pipelines (RAG)
+- Debugging real deployment issues
+- End-to-end full-stack system building
 
 ---
 
 ## 🛡 License
-Distributed under the MIT License. See `LICENSE` for more information.
+
+MIT License
 
 ---
 
-**Developed with ❤️ by Ayush Pandey**
+## 👨‍💻 Author
 
-***
+**Ayush Pandey**  
+B.Tech CSE | Full-Stack + AI Developer
+
+---
+
+⭐ If you like this project, consider giving it a star!
